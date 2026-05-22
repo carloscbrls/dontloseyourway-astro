@@ -1,0 +1,330 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="The Chapel — Don't Lose Your Way" description="Turn feelings into sound. A space where your emotions become words, lyrics, and songs.">
+
+  <section class="chapel-hero">
+    <div class="chapel-hero-overlay"></div>
+    <div class="chapel-hero-glow"></div>
+    <div class="container chapel-hero-content">
+      <h1>The Chapel</h1>
+      <p class="chapel-subtitle">A space to turn what you're feeling into something you can hear.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container chapel-body">
+      <div class="chapel-intro">
+        <p>Sometimes emotions are hard to explain in normal words.</p>
+        <p>Inside the Chapel, visitors can write a few thoughts about what they are feeling. Those words can become phrases, lyrics, or songs that reflect the moment they are living through.</p>
+        <p>Some are shared with others.</p>
+        <p>Some remain private.</p>
+        <p class="highlight">But every voice matters.</p>
+      </div>
+
+      <div class="chapel-form">
+        <h2 class="form-title">What are you feeling right now?</h2>
+        <p class="form-desc">Write a few words, a sentence, or a whole paragraph. There's no wrong answer.</p>
+        
+        <form id="chapelForm" class="chapel-input-area">
+          <label for="feelingInput" class="sr-only">What are you feeling?</label>
+          <textarea id="feelingInput" name="feeling" rows="5" placeholder="I'm feeling..." class="feeling-input" aria-label="Describe what you are feeling right now"></textarea>
+          
+          <div class="form-options">
+            <label class="option-label">
+              <input type="checkbox" name="share" id="shareCheck" />
+              <span>Share my words with others anonymously</span>
+            </label>
+            <label class="option-label">
+              <input type="checkbox" name="music" id="musicCheck" />
+              <span>Turn my words into music</span>
+            </label>
+          </div>
+
+          <button type="submit" class="cta cta-primary">Release</button>
+          <p class="form-note">Your words are processed privately. Nothing is stored or shared without your consent.</p>
+        </form>
+
+        <div id="chapelResponse" class="chapel-response hidden">
+          <h3>Thank you.</h3>
+          <p>Your words have been received. What you shared matters.</p>
+          <p id="musicNote" class="music-note hidden">If you chose to turn your words into music, a song will be created and shared here when it's ready.</p>
+          <a href="/chapel" class="cta cta-secondary">Share another feeling</a>
+        </div>
+      </div>
+
+      <div class="chapel-wall">
+        <h2 class="wall-title">Shared Voices</h2>
+        <p class="wall-desc">Anonymous words from people who stood where you stand.</p>
+        <div class="wall-cards">
+          <div class="wall-card">
+            <blockquote>"I didn't think anyone else felt this way."</blockquote>
+            <span class="wall-date">Shared with permission</span>
+          </div>
+          <div class="wall-card">
+            <blockquote>"The silence was the hardest part."</blockquote>
+            <span class="wall-date">Shared with permission</span>
+          </div>
+          <div class="wall-card">
+            <blockquote>"I'm still here. That's enough for today."</blockquote>
+            <span class="wall-date">Shared with permission</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .chapel-hero {
+    position: relative;
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 1.25rem 4rem;
+  }
+
+  .chapel-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(168,85,247,0.08), transparent);
+    z-index: -1;
+  }
+
+  .chapel-hero-glow {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 200px;
+    background: radial-gradient(ellipse, rgba(168,85,247,0.1), transparent 70%);
+    z-index: -1;
+  }
+
+  .chapel-hero-content h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .chapel-hero-content h1 { font-size: 3.5rem; }
+  }
+
+  .chapel-subtitle {
+    font-size: 1.125rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .chapel-intro {
+    text-align: center;
+    max-width: 32rem;
+    margin: 0 auto 3rem;
+  }
+
+  .chapel-intro p {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .chapel-intro .highlight {
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+
+  .chapel-form {
+    max-width: 36rem;
+    margin: 0 auto 4rem;
+    text-align: center;
+  }
+
+  .form-title {
+    font-size: 1.375rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-desc {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+
+  .feeling-input {
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: white;
+    resize: vertical;
+    min-height: 120px;
+    transition: border-color 0.2s;
+  }
+
+  .feeling-input::placeholder {
+    color: rgba(255,255,255,0.3);
+  }
+
+  .feeling-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  .form-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+    text-align: left;
+  }
+
+  .option-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+  }
+
+  .option-label input[type="checkbox"] {
+    accent-color: var(--color-accent);
+  }
+
+  .form-note {
+    font-size: 0.75rem;
+    color: var(--color-text-subtle);
+    margin-top: 0.75rem;
+  }
+
+  .chapel-response {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(168,85,247,0.05);
+    border: 1px solid rgba(168,85,247,0.15);
+    border-radius: 1rem;
+  }
+
+  .chapel-response h3 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+    color: var(--color-accent);
+  }
+
+  .chapel-response p {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .music-note {
+    color: var(--color-accent) !important;
+  }
+
+  .hidden { display: none; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+  .cta {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.25s;
+    margin-top: 1rem;
+    background: var(--color-accent);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-sans);
+  }
+
+  .cta:hover { background: var(--color-accent-2); }
+
+  .cta-secondary {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--color-text-muted);
+  }
+
+  .cta-secondary:hover {
+    border-color: rgba(255,255,255,0.3);
+    color: white;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .chapel-wall {
+    max-width: 40rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .wall-title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  .wall-desc {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  .wall-cards {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .wall-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    text-align: left;
+  }
+
+  .wall-card blockquote {
+    font-size: 1.0625rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .wall-date {
+    font-size: 0.75rem;
+    color: var(--color-text-subtle);
+  }
+</style>
+
+<script>
+  const form = document.getElementById('chapelForm');
+  const response = document.getElementById('chapelResponse');
+  const musicNote = document.getElementById('musicNote');
+  const musicCheck = document.getElementById('musicCheck');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    form.classList.add('hidden');
+    response.classList.remove('hidden');
+    if (musicCheck?.checked) {
+      musicNote?.classList.remove('hidden');
+    }
+  });
+</script>

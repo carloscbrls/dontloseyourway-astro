@@ -1,0 +1,214 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Resources — Don't Lose Your Way" description="If you're in crisis or need support, these resources can help right now.">
+
+  <section class="resources-hero">
+    <div class="container">
+      <h1>Resources</h1>
+      <p class="resources-subtitle">You don't have to carry this alone.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container resources-body">
+
+      <div class="crisis-priority">
+        <h2>If You Need Help Right Now</h2>
+        <div class="crisis-card">
+          <div class="crisis-phone">
+            <strong>Call or Text <a href="tel:988">988</a></strong>
+            <p>24/7 • Free • Confidential</p>
+            <p>Suicide & Crisis Lifeline</p>
+          </div>
+        </div>
+        <div class="crisis-card">
+          <div class="crisis-phone">
+            <strong>Text HOME to <a href="sms:741741&body=HOME">741741</a></strong>
+            <p>Crisis Text Line — Free, 24/7</p>
+          </div>
+        </div>
+        <div class="crisis-card">
+          <div class="crisis-phone">
+            <strong>Chat at <a href="https://988lifeline.org/chat/" target="_blank" rel="noopener noreferrer">988lifeline.org/chat</a></strong>
+            <p>Online chat — Free, 24/7</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="resource-group">
+        <h2>For Survivors</h2>
+        <div class="resource-list">
+          <div class="resource-item">
+            <h3>1in6.org</h3>
+            <p>Support for male-identified survivors of sexual abuse. Online support groups, 1-on-1 chat, and resources.</p>
+            <a href="https://1in6.org" target="_blank" rel="noopener noreferrer">1in6.org →</a>
+          </div>
+          <div class="resource-item">
+            <h3>RAINN</h3>
+            <p>Nation's largest anti-sexual violence organization. 24/7 hotline at 800-656-HOPE.</p>
+            <a href="https://rainn.org" target="_blank" rel="noopener noreferrer">rainn.org →</a>
+          </div>
+          <div class="resource-item">
+            <h3>National Suicide Prevention Lifeline</h3>
+            <p>988 — Free, confidential support for people in suicidal crisis or emotional distress.</p>
+            <a href="https://988lifeline.org" target="_blank" rel="noopener noreferrer">988lifeline.org →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="resource-group">
+        <h2>For Men</h2>
+        <div class="resource-list">
+          <div class="resource-item">
+            <h3>ManTherapy.org</h3>
+            <p>Mental health resources designed specifically for men. Humor, honesty, and real tools.</p>
+            <a href="https://mantherapy.org" target="_blank" rel="noopener noreferrer">mantherapy.org →</a>
+          </div>
+          <div class="resource-item">
+            <h3>HeadsUpGuys</h3>
+            <p>Practical tips, self-check tools, and stories from men who've been through depression.</p>
+            <a href="https://headsupguys.org" target="_blank" rel="noopener noreferrer">headsupguys.org →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="resource-group">
+        <h2>For Parents</h2>
+        <div class="resource-list">
+          <div class="resource-item">
+            <h3>National Parent Helpline</h3>
+            <p>1-855-427-2736 — Emotional support for parents in need.</p>
+            <a href="https://www.nationalparenthelpline.org" target="_blank" rel="noopener noreferrer">nationalparenthelpline.org →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="resource-group">
+        <h2>For the Central Valley</h2>
+        <div class="resource-list">
+          <div class="resource-item">
+            <h3>Stanislaus County Behavioral Health</h3>
+            <p>Local crisis services and mental health support for Stanislaus County residents.</p>
+            <a href="https://www.stanislausbhrs.org" target="_blank" rel="noopener noreferrer">stanislausbhrs.org →</a>
+          </div>
+          <div class="resource-item">
+            <h3>NAMI Merced County</h3>
+            <p>National Alliance on Mental Illness — local chapter offering support groups and education.</p>
+            <a href="https://www.nami.org/Local-NAMI/Merced-County" target="_blank" rel="noopener noreferrer">nami.org →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .resources-hero {
+    padding: 8rem 0 2rem;
+    text-align: center;
+  }
+
+  .resources-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 0.75rem;
+  }
+
+  .resources-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+    font-weight: 300;
+  }
+
+  .resources-body {
+    max-width: 44rem;
+  }
+
+  .crisis-priority {
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.25);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .crisis-priority h2 {
+    font-size: 1.375rem;
+    font-weight: 500;
+    color: var(--color-crisis);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .crisis-card {
+    background: rgba(0,0,0,0.3);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .crisis-phone strong {
+    font-size: 1.25rem;
+  }
+
+  .crisis-phone strong a {
+    color: white;
+    text-decoration: underline;
+  }
+
+  .crisis-phone p {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+  }
+
+  .resource-group {
+    margin-bottom: 2.5rem;
+  }
+
+  .resource-group h2 {
+    font-size: 1.375rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+  }
+
+  .resource-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .resource-item {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+  }
+
+  .resource-item h3 {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .resource-item p {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+  }
+
+  .resource-item a {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-size: 0.875rem;
+  }
+
+  .resource-item a:hover {
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,53 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="Privacy Policy — Don't Lose Your Way" description="How we protect your privacy and handle your information.">
+  <section class="legal-page"><div class="container legal-content">
+    <h1>Privacy Policy</h1>
+    <p class="legal-updated">Last updated: May 2026</p>
+    <h2>Our Promise</h2>
+    <p>Don't Lose Your Way exists because privacy matters — especially when people are sharing their most vulnerable feelings. This policy explains how we handle your information with the care it deserves.</p>
+    <h2>What We Collect</h2>
+    <ul>
+      <li><strong>Feelings & Chapel Submissions:</strong> When you write in the Chapel, we process your text to create lyrics or music (if you choose). Private submissions are not stored long-term.</li>
+      <li><strong>Contact Form Data:</strong> If you contact us through the Partners page, we collect your name, email, and message.</li>
+      <li><strong>Analytics:</strong> We use privacy-first analytics (Plausible) that do not use cookies or track individuals.</li>
+    </ul>
+    <h2>What We Do NOT Do</h2>
+    <ul>
+      <li>We do not sell your personal information</li>
+      <li>We do not use tracking cookies</li>
+      <li>We do not share your feelings with third parties without your consent</li>
+      <li>We do not use your content for AI training beyond the immediate Chapel experience</li>
+      <li>We do not require account creation or login</li>
+    </ul>
+    <h2>AI Processing</h2>
+    <p>When you use the Chapel feature, your text is processed by AI to generate creative content (lyrics, music). This processing happens in real-time and is not stored unless you explicitly choose to share it.</p>
+    <h2>Data Retention</h2>
+    <p>Private Chapel submissions are not stored long-term. Shared submissions are retained until you request removal. Contact form data is retained for partnership purposes only.</p>
+    <h2>Your Rights</h2>
+    <ul>
+      <li>Request deletion of any content you've shared</li>
+      <li>Opt out of any data collection</li>
+      <li>Contact us with privacy concerns at any time</li>
+    </ul>
+    <h2>Third-Party Services</h2>
+    <p>This site is hosted on Netlify and uses Cloudflare for security and performance. These services have their own privacy policies, but we do not share your personal information with them beyond what is necessary to operate the site.</p>
+    <h2>Contact</h2>
+    <p>For privacy questions or data requests, visit our <a href="/partners#contact">contact page</a>.</p>
+    <p class="legal-crisis">If you are in crisis, please call or text <a href="tel:988"><strong>988</strong></a>.</p>
+  </div></section>
+</Layout>
+<style>
+  .legal-page { padding: 6rem 0; }
+  .legal-content { max-width: 40rem; }
+  .legal-content h1 { font-size: 2rem; font-weight: 400; margin-bottom: 0.5rem; }
+  .legal-updated { font-size: 0.875rem; color: var(--color-text-subtle); margin-bottom: 2rem; }
+  .legal-content h2 { font-size: 1.25rem; font-weight: 500; margin: 2rem 0 0.75rem; }
+  .legal-content p { font-size: 1rem; color: var(--color-text-muted); font-weight: 300; margin-bottom: 1rem; line-height: 1.75; }
+  .legal-content ul { margin: 1rem 0 1.5rem 1.5rem; }
+  .legal-content li { font-size: 1rem; color: var(--color-text-muted); font-weight: 300; margin-bottom: 0.5rem; line-height: 1.6; }
+  .legal-content a { color: var(--color-accent); }
+  .legal-crisis { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 0.5rem; padding: 1rem; text-align: center; margin-top: 2rem; }
+  .legal-crisis a { color: var(--color-crisis); }
+</style>

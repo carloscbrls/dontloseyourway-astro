@@ -1,0 +1,112 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About — Don't Lose Your Way" description="I wrote a letter I hoped no one would ever have to read. I'm still here. And if you're reading this, you are too.">
+
+  <section class="about-hero">
+    <div class="container">
+      <h1>The Story</h1>
+      <blockquote class="origin-quote">I wrote a letter I hoped no one would ever have to read.</blockquote>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container about-body">
+      <div class="about-text">
+        <p>I'm still here. And if you're reading this, you are too.</p>
+        
+        <p>Don't Lose Your Way wasn't born from a business plan. It was born from a moment — a moment where everything felt like it was closing in, where silence felt louder than words, and where the distance between where I was and where I needed to be seemed impossible to cross.</p>
+        
+        <p>I spent years not speaking. Not because I had nothing to say, but because I didn't know how to say it. The silence became a habit. The habit became a wall. And the wall almost became an ending.</p>
+        
+        <p>But someone called me back. And I walked away from that bridge.</p>
+        
+        <p>This space exists for people who almost gave up — and stayed. It's not therapy. It's not a fix. It's proof that others have stood where you stand. Sometimes that's enough. Sometimes it's just enough to keep going for one more day.</p>
+        
+        <p>Don't Lose Your Way is a place to breathe. To write what you're feeling. To turn those feelings into something you can hear — words, lyrics, songs. Some things are shared. Some things stay private. But every voice matters.</p>
+        
+        <p>If you're in crisis right now, please reach out:</p>
+        
+        <div class="crisis-box">
+          <p><strong>Call or text <a href="tel:988">988</a></strong></p>
+          <p>24/7 • Free • Confidential</p>
+          <p>Suicide & Crisis Lifeline</p>
+        </div>
+
+        <p>You don't have to carry this alone. You never did.</p>
+        
+        <p class="signature">— The person who walked back</p>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .about-hero {
+    padding: 8rem 0 2rem;
+    text-align: center;
+  }
+
+  .about-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .about-hero h1 { font-size: 3rem; }
+  }
+
+  .origin-quote {
+    font-size: 1.5rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-accent);
+    max-width: 30rem;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .origin-quote { font-size: 1.75rem; }
+  }
+
+  .about-body {
+    max-width: 40rem;
+  }
+
+  .about-text p {
+    font-size: 1.0625rem;
+    font-weight: 300;
+    color: var(--color-text-muted);
+    margin-bottom: 1.25rem;
+    line-height: 1.75;
+  }
+
+  .crisis-box {
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.3);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    text-align: center;
+    margin: 1.5rem 0;
+  }
+
+  .crisis-box p {
+    margin-bottom: 0.5rem !important;
+    color: white !important;
+  }
+
+  .crisis-box a {
+    color: var(--color-crisis);
+    text-decoration: underline;
+    font-weight: 600;
+  }
+
+  .signature {
+    font-style: italic;
+    color: var(--color-text-subtle) !important;
+    margin-top: 2rem !important;
+  }
+</style>

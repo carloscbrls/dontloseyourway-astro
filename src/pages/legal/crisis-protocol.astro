@@ -1,0 +1,42 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="Crisis Protocol — Don't Lose Your Way" description="What happens if someone indicates they are in crisis.">
+  <section class="legal-page"><div class="container legal-content">
+    <h1>Crisis Protocol</h1>
+    <p class="legal-updated">Last updated: May 2026</p>
+    <h2>Our Commitment</h2>
+    <p>If someone visiting this platform indicates they are in crisis, at risk of self-harm, or experiencing a mental health emergency, our protocol is clear: prioritize their safety above everything else.</p>
+    <h2>What We Do</h2>
+    <ul>
+      <li><strong>Immediate Resources:</strong> The 988 Suicide & Crisis Lifeline number is displayed prominently on every page of this site, available 24/7 by phone or text</li>
+      <li><strong>Crisis Text Line:</strong> Text HOME to 741741 for free, 24/7 crisis support</li>
+      <li><strong>Online Chat:</strong> 988lifeline.org/chat provides free, confidential online chat</li>
+      <li><strong>No AI for Crisis:</strong> Our AI-powered features are for creative expression only. They do not assess, diagnose, or respond to crisis situations. If crisis language is detected, visitors are directed to human professionals immediately</li>
+    </ul>
+    <h2>What AI Does NOT Do</h2>
+    <ul>
+      <li>AI does not assess suicide risk</li>
+      <li>AI does not provide crisis counseling</li>
+      <li>AI does not make clinical decisions</li>
+      <li>AI does not replace professional help</li>
+    </ul>
+    <h2>For Partners & Organizations</h2>
+    <p>If you are a mental health organization and would like to partner with us on crisis response protocols, please visit our <a href="/partners">Partners page</a>.</p>
+    <p class="legal-crisis">If you are in crisis right now, please call or text <a href="tel:988"><strong>988</strong></a> — 24/7, free, and confidential.</p>
+  </div></section>
+</Layout>
+<style>
+  .legal-page { padding: 6rem 0; }
+  .legal-content { max-width: 40rem; }
+  .legal-content h1 { font-size: 2rem; font-weight: 400; margin-bottom: 0.5rem; }
+  .legal-updated { font-size: 0.875rem; color: var(--color-text-subtle); margin-bottom: 2rem; }
+  .legal-content h2 { font-size: 1.25rem; font-weight: 500; margin: 2rem 0 0.75rem; }
+  .legal-content p { font-size: 1rem; color: var(--color-text-muted); font-weight: 300; margin-bottom: 1rem; line-height: 1.75; }
+  .legal-content ul { margin: 1rem 0 1.5rem 1.5rem; }
+  .legal-content li { font-size: 1rem; color: var(--color-text-muted); font-weight: 300; margin-bottom: 0.5rem; line-height: 1.6; }
+  .legal-content a { color: var(--color-accent); text-decoration: none; }
+  .legal-content a:hover { text-decoration: underline; }
+  .legal-crisis { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 0.5rem; padding: 1rem; text-align: center; margin-top: 2rem; }
+  .legal-crisis a { color: var(--color-crisis); }
+</style>

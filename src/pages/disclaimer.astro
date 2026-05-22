@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Disclaimer — Don't Lose Your Way" description="Important disclaimer about this platform.">
+  <section class="legal-page"><div class="container legal-content">
+    <h1>Disclaimer</h1>
+    <p class="legal-updated">Last updated: May 2026</p>
+    <h2>Not Medical Advice</h2>
+    <p>The content on Don't Lose Your Way is for informational and reflective purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of qualified health providers with questions about mental health conditions.</p>
+    <h2>Not Crisis Intervention</h2>
+    <p>This platform is not a crisis intervention service. If you or someone you know is in immediate danger, please call or text <a href="tel:988"><strong>988</strong></a> (Suicide & Crisis Lifeline) or go to your nearest emergency room.</p>
+    <h2>AI-Generated Content</h2>
+    <p>The Chapel feature uses artificial intelligence to transform written feelings into creative expression (lyrics, music). This content is generated for personal reflection and artistic expression only. It is not therapy, counseling, or professional advice.</p>
+    <h2>No Guarantees</h2>
+    <p>We make no guarantees about the effectiveness of this platform for any particular purpose. The resources listed are provided as-is and do not constitute an endorsement of any organization.</p>
+    <h2>User Responsibility</h2>
+    <p>By using this platform, you accept full responsibility for your own well-being and acknowledge that this is a space for reflection — not treatment.</p>
+    <p class="legal-crisis">If you are in crisis, please call or text <a href="tel:988"><strong>988</strong></a> — 24/7, free, and confidential.</p>
+  </div></section>
+</Layout>
+<style>
+  .legal-page { padding: 6rem 0; }
+  .legal-content { max-width: 40rem; }
+  .legal-content h1 { font-size: 2rem; font-weight: 400; margin-bottom: 0.5rem; }
+  .legal-updated { font-size: 0.875rem; color: var(--color-text-subtle); margin-bottom: 2rem; }
+  .legal-content h2 { font-size: 1.25rem; font-weight: 500; margin: 2rem 0 0.75rem; }
+  .legal-content p { font-size: 1rem; color: var(--color-text-muted); font-weight: 300; margin-bottom: 1rem; line-height: 1.75; }
+  .legal-content a { color: var(--color-accent); }
+  .legal-crisis { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 0.5rem; padding: 1rem; text-align: center; margin-top: 2rem; }
+  .legal-crisis a { color: var(--color-crisis); }
+</style>

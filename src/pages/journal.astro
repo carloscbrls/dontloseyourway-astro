@@ -1,0 +1,156 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Journal — Don't Lose Your Way" description="Reflections, stories, and words for the quiet moments.">
+
+  <section class="journal-hero">
+    <div class="container">
+      <h1>Journal</h1>
+      <p class="journal-subtitle">Words for the quiet moments.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container journal-body">
+      <div class="journal-intro">
+        <p>Sometimes you don't need advice. You just need to read something that makes you feel less alone.</p>
+        <p>The Journal is a collection of reflections, stories, and thoughts for those moments. Updated regularly.</p>
+      </div>
+
+      <div class="journal-entries">
+        <article class="entry">
+          <div class="entry-tag">Reflection</div>
+          <h2 class="entry-title">The Weight of Silence</h2>
+          <p class="entry-excerpt">For 34 years, I didn't speak. Not because I had nothing to say, but because I didn't know how. Silence isn't empty — it's heavy. And the heaviest silences are the ones we carry alone.</p>
+          <span class="entry-date">May 2026</span>
+        </article>
+
+        <article class="entry">
+          <div class="entry-tag">Reflection</div>
+          <h2 class="entry-title">Don't Lose Your Way</h2>
+          <p class="entry-excerpt">Those four words carry more weight than any business plan, any revenue target, any metric. They came from a father to a son. And now they belong to everyone who needs them.</p>
+          <span class="entry-date">May 2026</span>
+        </article>
+
+        <article class="entry">
+          <div class="entry-tag">Music</div>
+          <h2 class="entry-title">When Words Aren't Enough</h2>
+          <p class="entry-excerpt">Sometimes a song says what words can't. The Chapel turns feelings into sound — because not everything needs to be explained. Some things just need to be heard.</p>
+          <span class="entry-date">May 2026</span>
+        </article>
+      </div>
+
+      <div class="journal-cta">
+        <p>More entries coming soon.</p>
+        <a href="/chapel" class="cta">Visit the Chapel</a>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .journal-hero {
+    padding: 8rem 0 2rem;
+    text-align: center;
+  }
+
+  .journal-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 0.75rem;
+  }
+
+  .journal-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+    font-weight: 300;
+  }
+
+  .journal-body {
+    max-width: 40rem;
+  }
+
+  .journal-intro {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .journal-intro p {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+  }
+
+  .journal-entries {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .entry {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 0.75rem;
+    padding: 1.75rem;
+  }
+
+  .entry-tag {
+    display: inline-block;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    background: rgba(168,85,247,0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    margin-bottom: 0.75rem;
+  }
+
+  .entry-title {
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+  }
+
+  .entry-excerpt {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+
+  .entry-date {
+    font-size: 0.75rem;
+    color: var(--color-text-subtle);
+  }
+
+  .journal-cta {
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .journal-cta p {
+    color: var(--color-text-subtle);
+    font-size: 0.9375rem;
+    margin-bottom: 1rem;
+  }
+
+  .cta {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    background: var(--color-accent);
+    color: white;
+    transition: all 0.25s;
+  }
+
+  .cta:hover { background: var(--color-accent-2); }
+</style>

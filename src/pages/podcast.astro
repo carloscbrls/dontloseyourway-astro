@@ -1,0 +1,119 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Podcast — Don't Lose Your Way" description="Listen to stories, reflections, and voices from people who almost gave up — and stayed.">
+
+  <section class="podcast-hero">
+    <div class="container">
+      <h1>Podcast</h1>
+      <p class="podcast-subtitle">Stories from people who almost gave up — and stayed.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container podcast-body">
+      <div class="podcast-intro">
+        <p>Sometimes you need to hear a voice. Not advice. Not a lecture. Just someone who gets it.</p>
+        <p>The Don't Lose Your Way podcast features anonymous stories, reflections, and conversations from people who've been in the quiet moments and found their way through.</p>
+        <p>Coming soon.</p>
+      </div>
+
+      <div class="podcast-placeholder">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+        <p>Episodes launching soon. Follow us to be notified.</p>
+      </div>
+
+      <div class="podcast-links">
+        <p>Available on:</p>
+        <div class="platforms">
+          <span>Spotify</span>
+          <span>Apple Podcasts</span>
+          <span>YouTube</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .podcast-hero {
+    padding: 8rem 0 2rem;
+    text-align: center;
+  }
+
+  .podcast-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 0.75rem;
+  }
+
+  .podcast-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+    font-weight: 300;
+  }
+
+  .podcast-body {
+    max-width: 40rem;
+  }
+
+  .podcast-intro {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .podcast-intro p {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    font-weight: 300;
+    margin-bottom: 0.75rem;
+  }
+
+  .podcast-placeholder {
+    text-align: center;
+    padding: 3rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .podcast-placeholder svg {
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+    opacity: 0.6;
+  }
+
+  .podcast-placeholder p {
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+    font-weight: 300;
+  }
+
+  .podcast-links {
+    text-align: center;
+  }
+
+  .podcast-links p {
+    font-size: 0.875rem;
+    color: var(--color-text-subtle);
+    margin-bottom: 0.75rem;
+  }
+
+  .platforms {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .platforms span {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    padding: 0.375rem 1rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 9999px;
+  }
+</style>

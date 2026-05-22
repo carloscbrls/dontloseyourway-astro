@@ -1,0 +1,36 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="AI Disclosure — Don't Lose Your Way" description="How AI is used on this platform.">
+  <section class="legal-page"><div class="container legal-content">
+    <h1>AI Disclosure</h1>
+    <p class="legal-updated">Last updated: May 2026</p>
+    <p>Don't Lose Your Way uses artificial intelligence in specific, transparent ways:</p>
+    <h2>Chapel — Feelings Into Sound</h2>
+    <p>The Chapel feature allows visitors to write about their feelings and optionally transform those words into lyrics or music. This transformation is powered by AI. The AI does not provide therapy, diagnosis, or counseling. It creates creative expression from your words.</p>
+    <h2>What AI Does NOT Do Here</h2>
+    <ul>
+      <li>AI does not provide mental health advice, diagnosis, or treatment</li>
+      <li>AI does not replace professional counseling or crisis intervention</li>
+      <li>AI does not make decisions about your care or well-being</li>
+      <li>AI does not store your personal feelings without your explicit consent</li>
+    </ul>
+    <h2>Data & Privacy</h2>
+    <p>Feelings shared in the Chapel are processed to create music or lyrics. You choose whether to share them with others or keep them private. Unshared submissions are not stored long-term.</p>
+    <h2>Human Oversight</h2>
+    <p>This platform is built and maintained by real people. AI is a tool for creative expression, not a substitute for human connection or professional help.</p>
+    <p class="legal-crisis">If you are in crisis, please call or text <a href="tel:988"><strong>988</strong></a>.</p>
+  </div></section>
+</Layout>
+<style>
+  .legal-page { padding: 6rem 0; }
+  .legal-content { max-width: 40rem; }
+  .legal-content h1 { font-size: 2rem; font-weight: 400; margin-bottom: 0.5rem; }
+  .legal-updated { font-size: 0.875rem; color: var(--color-text-subtle); margin-bottom: 2rem; }
+  .legal-content h2 { font-size: 1.25rem; font-weight: 500; margin: 2rem 0 0.75rem; }
+  .legal-content p { font-size: 1rem; color: var(--color-text-muted); font-weight: 300; margin-bottom: 1rem; line-height: 1.75; }
+  .legal-content ul { margin: 1rem 0 1.5rem 1.5rem; }
+  .legal-content li { font-size: 1rem; color: var(--color-text-muted); font-weight: 300; margin-bottom: 0.5rem; line-height: 1.6; }
+  .legal-crisis { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 0.5rem; padding: 1rem; text-align: center; margin-top: 2rem; }
+  .legal-crisis a { color: var(--color-crisis); }
+</style>
