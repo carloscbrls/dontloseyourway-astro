@@ -1,20 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Wayline from '../components/Wayline.astro';
 ---
 
 <Layout title="Don't Lose Your Way — You are not the only one" description="A quiet space for reflection. Not therapy. Not a fix. Just proof that others have stood where you stand.">
   <section class="hero">
+    <div class="hero-glow glow-pulse" aria-hidden="true"></div>
     <div class="container hero-inner">
-      <img src="/media/hero.png" alt="Don't Lose Your Way" width="1024" height="1024" class="hero-img" />
-      <h1>You are not the only one.</h1>
-      <p class="hero-line">A quiet space for reflection.</p>
-      <p class="hero-line">Not therapy. Not a fix.</p>
-      <p class="hero-line">Just proof that others have stood where you stand.</p>
-      <p class="hero-doors">
+      <img src="/media/hero.png" alt="Don't Lose Your Way" width="1024" height="1024" class="hero-img rise" />
+      <h1 class="rise rise-1">You are not the only one.</h1>
+      <p class="hero-line rise rise-2">A quiet space for reflection.</p>
+      <p class="hero-line rise rise-2">Not therapy. Not a fix.</p>
+      <p class="hero-line rise rise-3">Just proof that others have stood where you stand.</p>
+      <p class="hero-doors rise rise-4">
         <a href="/start-here" class="door-link">Start Here</a>
         <a href="/about" class="door-link">Read the full story</a>
         <a href="/podcast" class="door-link">Listen</a>
       </p>
+      <Wayline />
     </div>
   </section>
 
@@ -42,6 +45,11 @@ import Layout from '../layouts/Layout.astro';
       <p>I wrote a letter I hoped no one would ever have to read.</p>
       <p>I'm still here. And if you're reading this, you are too.</p>
       <p>This isn't a success story. It's a place to feel less alone.</p>
+      <div class="video-wrap">
+        <video controls preload="metadata" src="/video/dont-lose-your-way-captioned.mp4" aria-label="Don't Lose Your Way — a short introduction in Carlos's own voice">
+          Your browser does not support the video element.
+        </video>
+      </div>
       <p><a href="/about">Read the full story →</a></p>
       <p>This space exists for people who almost gave up — and stayed.</p>
     </div>
@@ -76,11 +84,19 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <style>
-    .hero { padding: 3.5rem 0 2.5rem; text-align: center; }
-    .hero-img { width: 180px; height: 180px; border-radius: 24px; margin: 0 auto 1.5rem; display: block; }
-    .hero h1 { margin: 0 0 1rem; }
-    .hero-line { font-size: 1.125rem; font-weight: 300; color: var(--muted); margin: 0 0 0.375rem; }
-    .hero-doors { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin-top: 2rem; }
+    .hero { position: relative; padding: 4.5rem 0 3.5rem; text-align: center; overflow: hidden; }
+    /* A low rose light behind the artwork — the horizon glow in the image, extended into the page. */
+    .hero-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 42% at 50% 34%, rgba(207, 46, 79, 0.22), rgba(207, 46, 79, 0.06) 55%, transparent 75%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; }
+    .hero-img { width: 240px; height: 240px; border-radius: 28px; margin: 0 auto 2rem; display: block; box-shadow: 0 0 60px rgba(207, 46, 79, 0.25); }
+    .hero h1 { margin: 0 0 1.25rem; }
+    .hero-line { font-size: 1.1875rem; font-weight: 300; color: var(--muted); margin: 0 0 0.375rem; }
+    .hero-doors { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin: 2.25rem 0 2.75rem; }
     .door-link {
       display: inline-flex; align-items: center; min-height: 44px;
       padding: 0.625rem 1.25rem; border: 1px solid var(--border); border-radius: 9999px;
@@ -88,6 +104,8 @@ import Layout from '../layouts/Layout.astro';
     }
     .door-link:hover { background: var(--surface); }
     .section-alt { background: var(--surface); }
+    .video-wrap { margin: 2rem 0; }
+    .video-wrap video { width: 100%; max-width: 24rem; display: block; border-radius: var(--radius-md); background: #000; }
     .embed-wrap { margin: 1.5rem 0; border-radius: var(--radius-md); overflow: hidden; }
     .embed-wrap iframe { display: block; border: 0; }
   </style>

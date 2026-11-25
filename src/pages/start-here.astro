@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Wayline from '../components/Wayline.astro';
 ---
 
 <Layout title="Start Here — Don't Lose Your Way" description="You are not the only one. A quiet space for reflection. Not therapy. Not a fix. Just proof that others have stood where you stand.">
@@ -23,7 +24,29 @@ import Layout from '../layouts/Layout.astro';
       <p>This isn't a success story. It's a place to feel less alone.</p>
       <p><a href="/about">Read the full story →</a></p>
       <p>This space exists for people who almost gave up — and stayed.</p>
+    </div>
+  </section>
 
+  <section class="section section-alt">
+    <div class="container prose">
+      <h2>Start with my story</h2>
+      <p>Two listens from the <em>Healing Trauma Through AI Music</em> series — the short intro first, then the episode it opens.</p>
+
+      <h3 class="listen-title">Ep. 6 Intro: This Is My Story</h3>
+      <div class="embed-wrap">
+        <iframe title="Healing Trauma Through AI Music — Ep. 6 Intro: This Is My Story on SoundCloud" width="100%" height="166" scrolling="no" frameborder="no" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/carlos-cabrales-iii/healing-trauma-through-ai-2&color=%23cf2e4f&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>
+      </div>
+
+      <h3 class="listen-title">Ep. 6: My Unspoken Journey</h3>
+      <div class="embed-wrap">
+        <iframe title="Healing Trauma Through AI Music — Ep. 6: My Unspoken Journey on SoundCloud" width="100%" height="166" scrolling="no" frameborder="no" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/carlos-cabrales-iii/the-weight-of-inherited&color=%23cf2e4f&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>
+      </div>
+      <p><a href="https://soundcloud.com/carlos-cabrales-iii/sets/healing-trauma-through-ai" target="_blank" rel="noopener noreferrer">The full series on SoundCloud →</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container prose">
       <h2>Stay a little longer</h2>
       <ul class="doors">
         <li><a href="/about">Read the story</a> — the moment this place began.</li>
@@ -32,6 +55,7 @@ import Layout from '../layouts/Layout.astro';
         <li><a href="/journal">Journal</a> — reflections for the nights you feel alone.</li>
         <li><a href="/resources">Resources</a> — grounding tools and support for right now, and for tonight.</li>
       </ul>
+      <Wayline />
 
       <h2>The music that came from this place</h2>
       <div class="embed-wrap">
@@ -42,11 +66,22 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <style>
+    .section-alt { background: var(--surface); }
     .video-wrap { margin: 2rem 0; }
     .video-wrap video { width: 100%; max-width: 24rem; display: block; margin: 0 auto; border-radius: var(--radius-md); background: #000; }
-    .doors li { margin-bottom: 0.75rem; }
-    .doors a { font-weight: 600; }
-    .embed-wrap { margin: 1.5rem 0; border-radius: var(--radius-md); overflow: hidden; }
+    .prose .doors { list-style: none; padding-left: 0; }
+    .prose .doors li {
+      margin-bottom: 0.75rem;
+      padding: 1rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent-strong-bg);
+      border-radius: var(--radius-md);
+    }
+    .prose .doors a { font-weight: 600; }
+    .listen-title { margin-top: 1.75rem; }
+    .embed-wrap { margin: 1rem 0 1.5rem; border-radius: var(--radius-md); overflow: hidden; }
     .embed-wrap iframe { display: block; border: 0; }
+    .wayline { margin-top: 2.5rem; }
   </style>
 </Layout>

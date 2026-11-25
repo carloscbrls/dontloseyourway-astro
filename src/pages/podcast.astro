@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Wayline from '../components/Wayline.astro';
 ---
 
 <Layout title="Podcast — Don't Lose Your Way" description="Documentary-style stories for those who carry weight no one sees. Sometimes it helps to hear a voice that knows.">
@@ -7,6 +8,12 @@ import Layout from '../layouts/Layout.astro';
     <div class="container prose">
       <h1>Podcast</h1>
       <p>Documentary-style stories for those who carry weight no one sees. Sometimes it helps to hear a voice that knows.</p>
+
+      <h2>The Don't Lose Your Way Podcast</h2>
+      <p class="working-title">A working title — the show's final name is still being chosen.</p>
+      <p>This is where the podcast is going: one voice — Carlos, telling his own story. Each episode opens with the same introduction, walks through one chapter of what he went through, and closes with what he is building toward next. New episodes will appear here as they are ready.</p>
+
+      <Wayline />
 
       <h2>Start Here</h2>
 
@@ -48,5 +55,7 @@ import Layout from '../layouts/Layout.astro';
 
   <style>
     audio { width: 100%; max-width: 36rem; min-height: 44px; }
+    .working-title { font-style: italic; }
+    .wayline { margin: 2.5rem auto 0.5rem; }
   </style>
 </Layout>

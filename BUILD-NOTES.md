@@ -31,6 +31,15 @@ folder-deployed from `dist/`; DNS: Cloudflare CNAME `dontloseyourway` →
   Impact affiliate URL lives only in the Bolt source and should be restored
   from there in a later pass.
 
+## Elevation pass (2026-11-25, later the same day)
+
+Design-and-assets pass on top of Phase 1 (deploy 6b075d3cfb73e61b6d23f8fa; full record in `qa/BUILD-REPORT.md`). What a future builder needs to know:
+- Display type is **Newsreader** (serif) for h1/h2/brand/pull-quotes; body stays Inter. The site's motif is the **wayline** (`.wayline` in Layout global CSS; `src/components/Wayline.astro`) — a gradient hairline with one lit node, from the artwork's path-to-a-star.
+- Motion (`.rise`, `.glow-pulse`) lives only under `prefers-reduced-motion: no-preference`.
+- `scripts/gen-pages.mjs` has one presentational hook: `withPullquote()` adds the About pull-quote, assembled from the page's own generated paragraphs (never retyped). If the About anchor lines change, it warns and skips.
+- Podcast page now frames the solo story show under the placeholder heading "The Don't Lose Your Way Podcast", explicitly labeled a working title on the page. The show's real name is an open decision (GAPS H2 collisions) — when Carlos names it, update that heading + the working-title line only.
+- "The Man I Hide" is deliberately NOT on this site yet: no public SoundCloud version exists (it premieres in the Circuit Listening Room first). Add it, story-framed via the series pattern, only after its public SoundCloud release.
+
 ## Phase 2 (deferred, by design)
 
 Chapel live build (safety-gated) · .com redirect + registrar transfer ·
