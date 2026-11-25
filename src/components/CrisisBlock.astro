@@ -1,0 +1,52 @@
+---
+// The Village crisis block, verbatim per Quill's site guidance (Nov 22, 2026).
+// Text TALK to 741741 is the Village standard wording.
+---
+
+<aside class="crisis-block" aria-label="Crisis support">
+  <p class="crisis-block-text">If you or someone you love is struggling: call or text <strong>988</strong> — the Suicide and Crisis Lifeline (U.S., free, 24/7, English and Spanish). Or text <strong>TALK to 741741</strong> for the Crisis Text Line.</p>
+  <p class="crisis-actions">
+    <a class="crisis-btn" href="tel:988">Call or text 988</a>
+    <a class="crisis-btn crisis-btn-alt" href="sms:741741">Text TALK to 741741</a>
+  </p>
+</aside>
+
+<style>
+  .crisis-block {
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent-strong-bg);
+    background: var(--surface);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin: 3rem 0 0;
+  }
+  .crisis-block-text {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin: 0 0 1rem;
+  }
+  .crisis-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0;
+  }
+  .crisis-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.625rem 1.25rem;
+    border-radius: 9999px;
+    background: var(--accent-strong-bg);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    text-decoration: none;
+  }
+  .crisis-btn-alt {
+    background: transparent;
+    border: 1px solid var(--accent-tint);
+    color: var(--accent-tint);
+  }
+</style>
