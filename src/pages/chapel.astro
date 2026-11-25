@@ -1,19 +1,497 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Wayline from '../components/Wayline.astro';
 ---
 
-<Layout title="The Chapel — Don't Lose Your Way" description="A creative space where visitors can write a few words about what they are feeling and transform those emotions into phrases, lyrics, or songs. The Chapel returns soon.">
+<Layout title="The Chapel — Don't Lose Your Way" description="The Chapel is a quiet gathering place inside Don't Lose Your Way: leave an anonymous reflection, read the reflections of others, and stand for a while in a room where people understand. The lyric-making Chapel is still being built.">
   <section class="section">
     <div class="container prose">
       <h1>The Chapel</h1>
       <p>A creative space where visitors can write a few words about what they are feeling and transform those emotions into phrases, lyrics, or songs.</p>
       <p>Through the Chapel experience, feelings can be transformed into words, phrases, lyrics, or songs that give emotion a voice.</p>
-      <p class="returns"><strong>The Chapel returns soon.</strong></p>
-      <p>It is being rebuilt with care — the same quiet room, on a foundation that can keep it safe. Until it opens again, the rest of this space is here: <a href="/journal">read a reflection</a>, <a href="/podcast">listen to a voice that knows</a>, or <a href="/resources">find a grounding tool for tonight</a>.</p>
+    </div>
+
+    <div class="container">
+      <Wayline />
+    </div>
+
+    <div class="container prose">
+      <h2>The Chapel is open — as a gathering place</h2>
+      <p>The lyric-making Chapel is still being built, carefully, on a foundation that can keep it safe. For now, the Chapel opens its doors as something simpler: a quiet room where you can leave a reflection and read the reflections of others who have stood where you stand.</p>
     </div>
   </section>
 
-  <style>
-    .returns { font-size: 1.25rem; color: var(--text); margin-top: 2rem; }
+  <section class="section section-forum" aria-label="The Chapel gathering place">
+    <div class="container">
+      <div class="peer-note" role="note">
+        <p><strong>This is a peer space, not therapy,</strong> and it is not monitored around the clock. Every reflection is read by a person before it appears here. If you are in crisis right now, please reach out: <a href="tel:988">call or text 988</a>, or <a href="sms:741741">text TALK to 741741</a>.</p>
+      </div>
+
+      <h2 class="rooms-heading" id="rooms-heading">Choose a room</h2>
+      <div class="rooms" role="group" aria-labelledby="rooms-heading" id="rooms"></div>
+      <p class="room-desc" id="room-desc" aria-live="polite"></p>
+
+      <div id="posts" class="posts" aria-live="polite">
+        <p class="posts-status" id="posts-status">Opening the room…</p>
+      </div>
+
+      <div class="form-wrap">
+        <h2 id="form-heading">Leave a reflection</h2>
+        <p class="reply-context" id="reply-context" hidden>
+          You are responding to a reflection in this room.
+          <button type="button" class="link-btn" id="reply-cancel">Cancel and start fresh</button>
+        </p>
+
+        <form id="chapel-form" novalidate>
+          <div class="field">
+            <label for="f-room">Room</label>
+            <select id="f-room" name="room"></select>
+          </div>
+
+          <div class="field">
+            <label for="f-body">Your reflection</label>
+            <textarea id="f-body" name="body" rows="5" maxlength="1200" required aria-describedby="body-count body-help"></textarea>
+            <p class="field-row">
+              <span id="body-help">Say it the way it is tonight. Plain words are enough.</span>
+              <span id="body-count" class="count">0 / 1200</span>
+            </p>
+          </div>
+
+          <div class="field">
+            <label for="f-signoff">Sign-off <span class="optional">(optional, one word)</span></label>
+            <input type="text" id="f-signoff" name="signoff" maxlength="24" autocomplete="off" aria-describedby="signoff-help" />
+            <p class="field-note" id="signoff-help">A name you choose for this room only. Leave it blank to stay simply anonymous.</p>
+          </div>
+
+          <div class="hp" aria-hidden="true">
+            <label>Website <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
+          <p class="privacy-line">Anonymous by design: no account, no email, nothing that identifies you. Every reflection is read by a person before it appears. <a href="/legal/community-moderation">How moderation works</a> · <a href="/legal/crisis-protocol">Crisis protocol</a></p>
+
+          <p class="form-error" id="form-error" role="alert" hidden></p>
+          <button type="submit" class="submit-btn" id="submit-btn">Share my reflection</button>
+        </form>
+
+        <div class="panel panel-thanks" id="panel-thanks" tabindex="-1" hidden>
+          <h3>Thank you.</h3>
+          <p>Your reflection is with us now. A person reads every one before it appears here, so it may take a little time. You are not the only one.</p>
+        </div>
+
+        <div class="panel panel-crisis" id="panel-crisis" tabindex="-1" hidden>
+          <h3>Please stay.</h3>
+          <p>What you wrote tells us you may be hurting in a way this room cannot hold. Your reflection was not saved, and you are not in trouble — we just want real help within your reach right now.</p>
+          <p class="crisis-actions">
+            <a class="cbtn" href="tel:988">Call or text 988</a>
+            <a class="cbtn cbtn-alt" href="sms:741741">Text TALK to 741741</a>
+          </p>
+          <p>Free, confidential, 24/7. When you are ready, this room will still be here.</p>
+        </div>
+
+        <div class="panel panel-rephrase" id="panel-rephrase" tabindex="-1" hidden>
+          <h3>One small ask.</h3>
+          <p>This room asks for gentler words. What you have to say matters here, and it lands better without language that targets people. Please reword your reflection and try again.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- is:global on purpose: the room buttons, post cards, and respond buttons
+       are created by the page script at runtime and never carry Astro's scoped
+       style attribute, so scoped rules would not reach them. These styles ship
+       only in this page's bundle. -->
+  <style is:global>
+    .section-forum { padding-top: 0; }
+    .peer-note {
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent-strong-bg);
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .peer-note p { margin: 0; font-size: 1rem; line-height: 1.65; color: var(--muted); font-weight: 300; }
+    .peer-note strong { color: var(--text); }
+
+    .rooms-heading { margin-top: 0; }
+    .rooms { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0 0.75rem; }
+    .room-btn {
+      display: inline-flex; align-items: center; min-height: 44px;
+      padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 9999px;
+      background: transparent; color: var(--muted);
+      font-family: var(--font-sans); font-size: 0.9375rem; cursor: pointer;
+    }
+    .room-btn:hover { color: var(--text); background: var(--surface); }
+    .room-btn[aria-pressed="true"] { color: #ffffff; background: var(--accent-strong-bg); border-color: var(--accent-strong-bg); }
+    .room-desc { color: var(--muted); font-weight: 300; font-size: 1rem; margin: 0 0 2rem; min-height: 1.6em; }
+
+    .posts { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 3rem; }
+    .posts-status { color: var(--muted); font-weight: 300; }
+    .post {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent-strong-bg);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+    }
+    .post-body { margin: 0 0 0.75rem; font-size: 1.0625rem; font-weight: 300; line-height: 1.7; color: var(--text); white-space: pre-wrap; overflow-wrap: break-word; }
+    .post-meta { margin: 0; color: var(--muted); font-size: 0.875rem; }
+    .respond-btn {
+      margin-top: 0.75rem; min-height: 44px; padding: 0.5rem 0.25rem;
+      background: none; border: 0; color: var(--accent-tint);
+      font-family: var(--font-sans); font-size: 0.9375rem; cursor: pointer; text-decoration: underline;
+    }
+    .replies { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .reply {
+      border-left: 2px solid var(--border);
+      padding: 0.25rem 0 0.25rem 1rem;
+    }
+    .reply .post-body { font-size: 1rem; }
+
+    .form-wrap {
+      border-top: 1px solid var(--border);
+      padding-top: 2.5rem;
+    }
+    .field { margin-bottom: 1.5rem; }
+    .field label { display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text); }
+    .field .optional { font-weight: 300; color: var(--muted); }
+    .field select, .field textarea, .field input[type="text"] {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      padding: 0.75rem 1rem;
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .field select { min-height: 44px; }
+    .field textarea { resize: vertical; }
+    .field-row { display: flex; justify-content: space-between; gap: 1rem; margin: 0.5rem 0 0; color: var(--muted); font-size: 0.875rem; font-weight: 300; }
+    .field-note { margin: 0.5rem 0 0; color: var(--muted); font-size: 0.875rem; font-weight: 300; }
+    .count { white-space: nowrap; }
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    .privacy-line { color: var(--muted); font-weight: 300; font-size: 0.9375rem; line-height: 1.65; margin: 0 0 1.5rem; }
+    .reply-context { color: var(--muted); font-weight: 300; margin: 0 0 1.25rem; }
+    .link-btn { background: none; border: 0; color: var(--accent-tint); font: inherit; cursor: pointer; text-decoration: underline; min-height: 44px; padding: 0.25rem; }
+    .form-error { color: var(--accent-tint); font-weight: 400; margin: 0 0 1rem; }
+    .submit-btn {
+      display: inline-flex; align-items: center; min-height: 44px;
+      padding: 0.625rem 1.5rem; border: 0; border-radius: 9999px;
+      background: var(--accent-strong-bg); color: #ffffff;
+      font-family: var(--font-sans); font-weight: 600; font-size: 0.9375rem; cursor: pointer;
+    }
+    .submit-btn[disabled] { opacity: 0.6; cursor: wait; }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+    .panel h3 { margin-top: 0; font-family: var(--font-serif); font-size: 1.5rem; color: var(--text); }
+    .panel p { color: var(--muted); font-weight: 300; line-height: 1.7; margin: 0 0 1rem; }
+    .panel p:last-child { margin-bottom: 0; }
+    .panel-crisis { border-left: 4px solid var(--accent-strong-bg); }
+    .crisis-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .cbtn {
+      display: inline-flex; align-items: center; min-height: 44px;
+      padding: 0.625rem 1.25rem; border-radius: 9999px;
+      background: var(--accent-strong-bg); color: #ffffff;
+      font-weight: 600; font-size: 0.9375rem; text-decoration: none;
+    }
+    .cbtn-alt { background: transparent; border: 1px solid var(--accent-tint); color: var(--accent-tint); }
   </style>
+
+  <script>
+    // The Chapel gathering place — anonymous, moderated, safety-screened.
+    // Spine: cc3po-ops Supabase. Anon key is public by design; the tables'
+    // RLS does the protecting (anon reads APPROVED only, inserts PENDING only,
+    // no update/delete). Nothing displays here that a person has not approved.
+    const SPINE_URL = 'https://cdrcgmdvepxwsbqaifxv.supabase.co';
+    const SPINE_ANON_KEY =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkcmNnbWR2ZXB4d3NicWFpZnh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1MDY4MDksImV4cCI6MjA4OTA4MjgwOX0.pKWLWvsSimTOMkpaXKKrLJESrQEMUayUU1c9ANzr1Dc';
+
+    const ROOMS = [
+      { key: 'tonight', label: 'Where I stand tonight', desc: 'For whatever tonight is, exactly as it is.' },
+      { key: 'letter', label: 'The Letter', desc: 'For the words you wrote, or almost wrote — and the morning after.' },
+      { key: 'quiet-spiral', label: 'The Quiet Spiral', desc: 'When it starts quietly — the withdrawing, the going numb, the smile that costs.' },
+      { key: 'wall', label: 'The Wall', desc: 'The systems that don\u2019t see you: paperwork, waiting rooms, doors that don\u2019t open.' },
+      { key: 'breaking-point', label: 'The Breaking Point', desc: 'The night everything broke — told from the side of still being here.' },
+      { key: 'aftermath', label: 'The Aftermath', desc: 'After the headlines, when it gets quiet and the work of staying begins.' },
+      { key: 'breaking-cycle', label: 'Breaking the Cycle', desc: 'What you are building so it does not repeat — for you, or for your kids.' },
+    ];
+
+    // Deterministic safety screens — the same lists and the same order as the
+    // Chapel example (server.py): crisis first, then abuse. A database trigger
+    // re-runs the crisis screen server-side, so crisis text is never stored
+    // even if this page is bypassed. The model is never part of the safety
+    // system; there is no model here at all.
+    const CRISIS_TERMS = [
+      'kill myself', 'suicide', 'end my life', 'want to die', 'self harm',
+      'cut myself', 'hurt myself', 'no reason to live', 'hang myself',
+      'overdose', 'slit my wrists',
+      'quiero morir', 'suicidio', 'matarme', 'quitarme la vida',
+      'acabar con mi vida', 'hacerme daño', 'no quiero vivir', 'quiero morirme',
+    ];
+    const ABUSE_TERMS = [
+      'kill all', 'death to', 'hate all', 'fuck you',
+      'nigger', 'nigga', 'faggot', 'cunt', 'retard', 'kike', 'spic',
+      'wetback', 'tranny',
+    ];
+
+    const MIN_INTERVAL_MS = 90000;
+    const LAST_KEY = 'dlywChapelLastSubmit';
+
+    const $ = (id) => document.getElementById(id);
+    const roomsEl = $('rooms'), descEl = $('room-desc'), postsEl = $('posts'),
+      form = $('chapel-form'), roomSel = $('f-room'), bodyEl = $('f-body'),
+      signoffEl = $('f-signoff'), honeyEl = $('f-website'), countEl = $('body-count'),
+      errorEl = $('form-error'), submitBtn = $('submit-btn'),
+      replyCtx = $('reply-context'), formHeading = $('form-heading');
+
+    let activeRoom = 'tonight';
+    let replyParent = null; // { id, room } when responding to a reflection
+
+    function normalize(s) {
+      return (s || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9 ]+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+    function screened(text, terms) {
+      const hay = ' ' + normalize(text) + ' ';
+      return terms.some((t) => hay.includes(' ' + normalize(t) + ' '));
+    }
+    function looksSpammy(text) {
+      const links = (text.match(/https?:\/\//gi) || []).length;
+      return links >= 2 || /(.)\1{11,}/.test(text);
+    }
+
+    async function spineInsert(table, row) {
+      const res = await fetch(`${SPINE_URL}/rest/v1/${table}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: SPINE_ANON_KEY,
+          Authorization: `Bearer ${SPINE_ANON_KEY}`,
+          Prefer: 'return=minimal',
+        },
+        body: JSON.stringify(row),
+      });
+      if (!res.ok) {
+        let detail = '';
+        try { detail = JSON.stringify(await res.json()); } catch {}
+        throw new Error(`insert failed ${res.status} ${detail}`);
+      }
+    }
+
+    // Safety events carry metadata only — room, category, time. Never the
+    // visitor's words, never anything that identifies them.
+    function logSafetyEvent(category) {
+      spineInsert('dlyw_chapel_safety_events', {
+        room: replyParent ? replyParent.room : roomSel.value,
+        category,
+      }).catch(() => {});
+    }
+
+    function showPanel(id) {
+      for (const p of ['panel-thanks', 'panel-crisis', 'panel-rephrase']) {
+        $(p).hidden = p !== id;
+      }
+      if (id) $(id).focus();
+    }
+    function showError(msg) {
+      errorEl.textContent = msg;
+      errorEl.hidden = !msg;
+    }
+
+    function fmtDate(iso) {
+      try {
+        return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      } catch { return ''; }
+    }
+
+    function postCard(post, isReply) {
+      const art = document.createElement('article');
+      art.className = isReply ? 'reply' : 'post';
+      const body = document.createElement('p');
+      body.className = 'post-body';
+      body.textContent = post.body;
+      const meta = document.createElement('p');
+      meta.className = 'post-meta';
+      meta.textContent = `— ${post.signoff ? post.signoff : 'Anonymous'} · ${fmtDate(post.created_at)}`;
+      art.append(body, meta);
+      if (!isReply) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'respond-btn';
+        btn.textContent = 'Respond to this reflection';
+        btn.addEventListener('click', () => setReply(post));
+        art.append(btn);
+      }
+      return art;
+    }
+
+    async function loadRoom(room) {
+      activeRoom = room;
+      descEl.textContent = ROOMS.find((r) => r.key === room)?.desc || '';
+      for (const b of roomsEl.querySelectorAll('.room-btn')) {
+        b.setAttribute('aria-pressed', b.dataset.room === room ? 'true' : 'false');
+      }
+      postsEl.innerHTML = '';
+      const status = document.createElement('p');
+      status.className = 'posts-status';
+      status.textContent = 'Opening the room…';
+      postsEl.append(status);
+      try {
+        const q = new URLSearchParams({
+          select: 'id,created_at,room,body,signoff,parent_id',
+          room: `eq.${room}`,
+          order: 'created_at.desc',
+          limit: '100',
+        });
+        const res = await fetch(`${SPINE_URL}/rest/v1/dlyw_chapel_posts?${q}`, {
+          headers: { apikey: SPINE_ANON_KEY, Authorization: `Bearer ${SPINE_ANON_KEY}` },
+        });
+        if (!res.ok) throw new Error('load failed');
+        const rows = await res.json();
+        postsEl.innerHTML = '';
+        const tops = rows.filter((r) => !r.parent_id);
+        const replies = rows.filter((r) => r.parent_id);
+        if (!tops.length) {
+          const empty = document.createElement('p');
+          empty.className = 'posts-status';
+          empty.textContent = 'No reflections in this room yet. Yours could be the first voice someone reads tonight.';
+          postsEl.append(empty);
+          return;
+        }
+        for (const top of tops) {
+          const card = postCard(top, false);
+          const mine = replies
+            .filter((r) => r.parent_id === top.id)
+            .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+          if (mine.length) {
+            const wrap = document.createElement('div');
+            wrap.className = 'replies';
+            for (const r of mine) wrap.append(postCard(r, true));
+            card.append(wrap);
+          }
+          postsEl.append(card);
+        }
+      } catch {
+        postsEl.innerHTML = '';
+        const err = document.createElement('p');
+        err.className = 'posts-status';
+        err.textContent = 'The room is quiet right now — reflections could not be loaded. Please try again in a moment.';
+        postsEl.append(err);
+      }
+    }
+
+    function setReply(post) {
+      replyParent = { id: post.id, room: post.room };
+      roomSel.value = post.room;
+      roomSel.disabled = true;
+      replyCtx.hidden = false;
+      formHeading.textContent = 'Respond to a reflection';
+      bodyEl.focus();
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    function clearReply() {
+      replyParent = null;
+      roomSel.disabled = false;
+      replyCtx.hidden = true;
+      formHeading.textContent = 'Leave a reflection';
+    }
+
+    // Build room buttons + form room options.
+    for (const room of ROOMS) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'room-btn';
+      b.dataset.room = room.key;
+      b.textContent = room.label;
+      b.setAttribute('aria-pressed', room.key === activeRoom ? 'true' : 'false');
+      b.addEventListener('click', () => { clearReply(); roomSel.value = room.key; loadRoom(room.key); });
+      roomsEl.append(b);
+      const opt = document.createElement('option');
+      opt.value = room.key;
+      opt.textContent = room.label;
+      roomSel.append(opt);
+    }
+    roomSel.value = activeRoom;
+    roomSel.addEventListener('change', () => loadRoom(roomSel.value));
+    $('reply-cancel').addEventListener('click', clearReply);
+    bodyEl.addEventListener('input', () => { countEl.textContent = `${bodyEl.value.length} / 1200`; });
+
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      showError('');
+      showPanel(null);
+
+      // Honeypot: a filled invisible field means a bot. Appear to succeed;
+      // store nothing, log nothing.
+      if (honeyEl.value) { showPanel('panel-thanks'); form.reset(); countEl.textContent = '0 / 1200'; return; }
+
+      const body = bodyEl.value.trim();
+      let signoff = signoffEl.value.trim().replace(/\s+/g, '');
+      if (signoff.length > 24) signoff = signoff.slice(0, 24);
+      if (body.length < 1) { showError('Please write a few words first — even one honest line is enough.'); bodyEl.focus(); return; }
+
+      const last = Number(localStorage.getItem(LAST_KEY) || 0);
+      if (Date.now() - last < MIN_INTERVAL_MS) {
+        showError('One reflection at a time — please wait a moment before sharing another.');
+        return;
+      }
+
+      const combined = `${body} ${signoff}`;
+      if (screened(combined, CRISIS_TERMS)) {
+        localStorage.setItem(LAST_KEY, String(Date.now()));
+        logSafetyEvent('crisis');
+        showPanel('panel-crisis');
+        return;
+      }
+      if (screened(combined, ABUSE_TERMS) || looksSpammy(body)) {
+        localStorage.setItem(LAST_KEY, String(Date.now()));
+        logSafetyEvent('abuse');
+        showPanel('panel-rephrase');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      try {
+        await spineInsert('dlyw_chapel_posts', {
+          room: replyParent ? replyParent.room : roomSel.value,
+          body,
+          signoff: signoff || null,
+          parent_id: replyParent ? replyParent.id : null,
+          status: 'pending',
+        });
+        localStorage.setItem(LAST_KEY, String(Date.now()));
+        form.reset();
+        countEl.textContent = '0 / 1200';
+        clearReply();
+        roomSel.value = activeRoom;
+        showPanel('panel-thanks');
+      } catch (err) {
+        // The database trigger re-runs the crisis screen; if it stopped the
+        // write, treat it exactly like a screen hit on this page.
+        if (String(err && err.message).includes('screened')) {
+          logSafetyEvent('crisis');
+          showPanel('panel-crisis');
+        } else {
+          showError('Your reflection could not be sent just now. Please try again in a moment — this room will be here.');
+        }
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    loadRoom(activeRoom);
+  </script>
 </Layout>
