@@ -305,3 +305,49 @@ Nothing in Carlos's first-person voice was written; no existing line of his was 
 ## Paperwork
 
 Village Calendar entry added ("CC3PO Village — Background Work", 2026-11-25, show as free). Change Log line appended to Drive doc 1KUs-319hRYzk4H_RTbMolZkpxYxsozezOz_1L81yo60. Scoped files mirrored into the `~/workspace/sites/dlyw-phase1` working copy (generator, quotes JSON, the three generated pages, the three new resource pages, Layout.astro) so the parallel Chapel-forum build keeps these additions on its next build; the forum build's own files (chapel/index/podcast/start-here) were not touched.
+
+# Chapel Forum v2 — Two-Tier Screen + Sweep Moderation — 2026-11-25 (15:00 PT approval: "I agree let's make those changes to make sure everything works the way it should")
+
+Two changes Carlos approved on the forum v1 launch report: soften the blunt crisis screen, and wire moderation into Vuelta's evening sweep. Both are LIVE.
+
+## Change 1 — Two-tier crisis screen
+
+**The rule set (identical in the page, `src/pages/chapel.astro` → `crisisTier()`, and the Postgres trigger `dlyw_chapel_screen()`; full SQL in `qa/screen-v2.sql`):** text is normalized first (lowercase, accents stripped, non-alphanumerics → spaces, word-boundary phrase matching — the DB gained a matching `dlyw_chapel_norm()` helper; v1's trigger matched raw substrings, v2 matches the page's semantics exactly).
+
+- **TIER 1 — never stored; visitor gets the kind crisis panel (988 / text TALK to 741741); metadata-only safety event logged:**
+  - **Method content in any tense** (moved out of the v1 crisis list into their own set): overdose/overdosed, slit/cut my wrists, hang/hanged myself, shoot/shot myself, jump off a/the, jumped off a/the · sobredosis, ahorcarme, colgarme, dispararme, cortarme las venas.
+  - **Crisis vocabulary + a present-tense desire / intent / plan / farewell signal** (PRESENT_STRONG): want to die, want to kill myself, going to kill/end it, about to kill/end, i have a plan, plan to kill/end, goodbye forever, saying goodbye, last message, cant go on, cant do this anymore, dont want to be here anymore, thinking/thoughts of suicide, feeling/feel suicidal, i am/im suicidal · quiero morir/morirme/matarme, no quiero vivir, quiero acabar/terminar con mi vida, voy a matarme/quitarme la vida/acabar con mi vida, tengo un plan, mi plan es, ultimo mensaje, ya no puedo mas, no puedo mas, pensando en el suicidio/suicidarme, me siento suicida. A strong signal wins even over past framing ("Last year I wanted to die, and tonight I want to die again" → Tier 1).
+  - **Crisis vocabulary + a bare imminence marker (tonight, right now, today, esta noche, ahora mismo, hoy) with NO past framing** → Tier 1.
+- **TIER 2 — testimony: stored as `pending` with `screen_flag='crisis_terms'`** (new nullable column, check-constrained; the trigger recomputes/overwrites the flag server-side, so it cannot be forged or omitted): crisis vocabulary with past framing — past-tense forms (wanted to die, tried to kill myself / end my life, ended it all, used to cut/hurt myself · quise morir, quise quitarme la vida, intente matarme/quitarme la vida/suicidarme, pensaba en morir/el suicidio, queria morir/morirme) or past-context markers (last year/month/week/night, years/months ago, back then, at the time, when i was, used to · el ano/mes pasado, la semana pasada, anoche, hace anos/meses/un ano, en ese momento, cuando tenia) — or with no present signal at all (third-person grief, help-seeking history: "My brother died by suicide", "Suicide prevention saved me"). It waits in the same moderation queue as everything else; nothing publishes without a person approving it.
+- **Lexicon deltas vs v1 (documented, deliberate):** added crisis terms `suicidal`, `suicida`, `end it all`, `acabar con todo` (v1 missed "I feel suicidal" entirely — no listed term matched); method terms split into the always-Tier-1 set; everything else carried over. Two gaps were caught by the new battery and fixed mid-pass: `feel suicidal` added to PRESENT_STRONG and `ended it all` to PAST_FORMS.
+- **Known boundary (stated plainly):** method references are refused storage even in past-tense testimony ("I overdosed in 2019") — the site's no-method-detail discipline; the visitor still gets the kind panel and can re-share without the method detail. A crisis noun + a bare time word with no past framing ("Perdí a mi esposo por suicidio y hoy busco ayuda") also lands Tier 1 — conservative by design, per the approval brief.
+- **Safety events:** logged for Tier 1 refusals only (category `crisis`), exactly as v1; Tier 2 posts are themselves the record (flagged in the queue), so no double-count. Abuse screen, honeypot, and the 90-second rate limit are unchanged (page-side, as v1).
+- **Moderation queue view** `dlyw_chapel_moderation_queue` recreated with `screen_flag` appended (existing columns untouched).
+
+**Proof battery (all against the production spine):**
+- Direct-REST (anon key) battery, 17 cases: EN+ES imminent (desire+tonight, bare tonight, plan) rejected P0001 + nothing stored; method past-tense EN+ES rejected; past testimony (incl. Carlos's exact example and the "tried in 2023, today I coach" mixed-tense case), third-person grief, ES testimony, self-harm history → stored pending + flagged; clean posts (incl. one with "tonight" but no crisis vocabulary) → stored pending, flag null; forged `status='approved'` insert → 401 RLS. 17/17 (one transient proxy artifact mid-run was re-verified by curl: HTTP 400 P0001, nothing stored).
+- Stored-row verification: flags exactly as designed; approve-via-SQL → anon SELECT returns only the approved row; reply files under the correct parent as pending; reply-to-reply rejected by the trigger; anon PATCH/DELETE denied at grant level.
+- JS unit battery on the shipped classifier (extracted from the built page source): 22/22, EN+ES, incl. accented input.
+- Browser E2E (`~/workspace/fleet-ci/dlyw-chapel-v2-test.mjs`): **23/23 PASS locally and 23/23 PASS on the live URL** — Tier 2 → thanks panel + pending/flagged in DB; Tier 1 EN and ES → crisis panel (988 + TALK present); abuse → rephrase; honeypot → fake thanks, nothing stored; rate limit intact; reply flow intact; safety events crisis×2 + abuse×1; after SQL approval the testimony displays and the pending reply stays hidden. All test rows and test-window safety events deleted after each run — **posts 0, events 0, queue 0** (the room is empty again).
+
+## Change 2 — Moderation in the evening sweep
+
+- **`cc3po-comment-dm-sweep` updated in place** (same id, schedule daily 19:47 PT, delivery, and every original instruction preserved — verified by re-reading the saved body): a new step reads `dlyw_chapel_moderation_queue` each run and surfaces pending reflections to Carlos in the main chat for HIS approve/reject decision (room, time, full text, sign-off, reply context, and the `crisis_terms` flag called out as read-first). **No auto-approval, no auto-rejection, no replies** — the Chapel is anonymous; surfaced ids are logged in `responses-log.md`; undecided items re-list briefly as still waiting; Carlos's decisions are executed by SQL only on his explicit word per item; empty queue = silence about the Chapel.
+- **Village Calendar:** the recurring "Village: Comment & DM sweep" entry (event `tr7kpnobfvqv29fpuk7k33aa80` on "CC3PO Village — Background Work") description now names the Chapel moderation queue check; verified by re-read.
+- **Routines doc** (`village-routines.md`): sweep row updated + dated changelog bullet appended, same motion.
+- **Drive Change Log:** line appended (2026-11-25 15:12 PT).
+
+## Six gates — Chapel v2 pass
+
+1. **Functional — PASS.** Build clean (18 pages); two-tier flows proven end-to-end local + live (above).
+2. **Axe WCAG 2.2 AA — PASS, 0 violations.** Local: /chapel (load + form-error), /, /start-here, /resources. Live: /chapel (load + form-error), /, /start-here, /podcast.
+3. **Mobile QA — PASS.** Live scripted Firefox run, 390/375/360 × /chapel, /, /start-here, /podcast: 0px overflow, one h1, no sub-44px targets, 7 rooms, approved test post visible during the run.
+4. **Live verification — PASS.** Netlify deploy `6b076aaa1a3c05a0b20d65e9` on site dontloseyourway-cc3po; the live Chapel JS chunk is md5-identical to the local build; live E2E 23/23.
+5. **Sources of truth — PASS.** No copy changed anywhere (the only page edit is the screen script + its comments); Carlos's Chapel paragraphs and all site copy untouched; crisis spec (strip + Quill block, 988 + TALK) untouched.
+6. **Contrast-safe tokens — PASS.** No new colors or styles; script-only change.
+
+## Paperwork
+
+This section; `qa/screen-v2.sql` (the full migration, idempotent, kept for the record); Village Calendar entry for the pass + the sweep-entry description update; Change Log line (2026-11-25 15:12 PT); routines doc updated. Source pushed to `carloscbrls/dontloseyourway-astro` branch `village-phase1` (chapel.astro, qa/screen-v2.sql, qa/BUILD-REPORT.md).
+
+Note for the record: the forum v1 build section does not appear in either local BUILD-REPORT copy (this file or the stale `dontloseyourway-astro` clone) — v1's facts stand in its Change Log line (2026-11-25 14:53 PT) and Calendar entry; this v2 section is appended here so the Chapel record continues in one place.

@@ -224,17 +224,65 @@ import Wayline from '../components/Wayline.astro';
       { key: 'breaking-cycle', label: 'Breaking the Cycle', desc: 'What you are building so it does not repeat — for you, or for your kids.' },
     ];
 
-    // Deterministic safety screens — the same lists and the same order as the
-    // Chapel example (server.py): crisis first, then abuse. A database trigger
-    // re-runs the crisis screen server-side, so crisis text is never stored
-    // even if this page is bypassed. The model is never part of the safety
-    // system; there is no model here at all.
+    // Deterministic two-tier safety screen (v2, 2026-11-25 — Carlos approved
+    // softening the v1 blunt rule). The lists and the algorithm are IDENTICAL
+    // to the database trigger (qa/screen-v2.sql), which re-runs the screen
+    // server-side, so Tier 1 content is never stored even if this page is
+    // bypassed. The model is never part of the safety system; there is no
+    // model here at all.
+    //   TIER 1 (never stored; visitor gets the crisis panel): method content
+    //     in any tense, and crisis vocabulary with a present-tense desire,
+    //     intent, plan, or farewell signal — or a bare imminence marker with
+    //     no past framing.
+    //   TIER 2 (stored as pending, flagged 'crisis_terms' for the human
+    //     moderator): crisis vocabulary in past-tense / survivor /
+    //     third-person / help-seeking framing. Nothing publishes without a
+    //     person approving it, so testimony waits in the same queue as
+    //     everything else — it is no longer turned away at the door.
+    const METHOD_TERMS = [
+      'overdose', 'overdosed', 'slit my wrists', 'cut my wrists', 'hang myself',
+      'hanged myself', 'shoot myself', 'shot myself', 'jump off a', 'jump off the',
+      'jumped off a', 'jumped off the',
+      'sobredosis', 'ahorcarme', 'colgarme', 'dispararme', 'cortarme las venas',
+    ];
     const CRISIS_TERMS = [
-      'kill myself', 'suicide', 'end my life', 'want to die', 'self harm',
-      'cut myself', 'hurt myself', 'no reason to live', 'hang myself',
-      'overdose', 'slit my wrists',
-      'quiero morir', 'suicidio', 'matarme', 'quitarme la vida',
-      'acabar con mi vida', 'hacerme daño', 'no quiero vivir', 'quiero morirme',
+      'kill myself', 'suicide', 'suicidal', 'end my life', 'end it all',
+      'want to die', 'self harm', 'cut myself', 'hurt myself', 'no reason to live',
+      'suicidio', 'suicida', 'matarme', 'quitarme la vida', 'acabar con mi vida',
+      'acabar con todo', 'hacerme daño', 'no quiero vivir', 'quiero morir',
+      'quiero morirme',
+    ];
+    const PRESENT_STRONG = [
+      'want to die', 'want to kill myself', 'want to end my life',
+      'going to kill', 'going to end it', 'going to end my life',
+      'about to kill', 'about to end', 'i have a plan', 'my plan is',
+      'plan to kill', 'plan to end', 'goodbye forever', 'saying goodbye',
+      'last message', 'cant go on', 'cant do this anymore',
+      'dont want to be here anymore', 'thinking about suicide',
+      'thoughts of suicide', 'feeling suicidal', 'feel suicidal', 'i am suicidal', 'im suicidal',
+      'quiero morir', 'quiero morirme', 'no quiero vivir', 'quiero matarme',
+      'quiero acabar con mi vida', 'quiero terminar con mi vida',
+      'voy a matarme', 'voy a quitarme la vida', 'voy a acabar con mi vida',
+      'tengo un plan', 'mi plan es', 'ultimo mensaje',
+      'ya no puedo mas', 'no puedo mas', 'pensando en el suicidio',
+      'pensando en suicidarme', 'me siento suicida',
+    ];
+    const PRESENT_TIME = [
+      'tonight', 'right now', 'today', 'esta noche', 'ahora mismo', 'hoy',
+    ];
+    const PAST_FORMS = [
+      'wanted to die', 'tried to kill myself', 'tried to end my life', 'ended it all',
+      'tried to die', 'used to want to die', 'used to cut myself',
+      'used to hurt myself',
+      'quise morir', 'quise quitarme la vida', 'intente matarme',
+      'intente quitarme la vida', 'intente suicidarme', 'pensaba en morir',
+      'pensaba en el suicidio', 'queria morir', 'queria morirme',
+    ];
+    const PAST_MARKERS = [
+      'last year', 'last month', 'last week', 'last night', 'years ago',
+      'months ago', 'back then', 'at the time', 'when i was', 'used to',
+      'el ano pasado', 'el mes pasado', 'la semana pasada', 'anoche',
+      'hace anos', 'hace meses', 'hace un ano', 'en ese momento', 'cuando tenia',
     ];
     const ABUSE_TERMS = [
       'kill all', 'death to', 'hate all', 'fuck you',
@@ -267,6 +315,22 @@ import Wayline from '../components/Wayline.astro';
     function screened(text, terms) {
       const hay = ' ' + normalize(text) + ' ';
       return terms.some((t) => hay.includes(' ' + normalize(t) + ' '));
+    }
+    function hasTerm(hay, terms) {
+      return terms.some((t) => hay.includes(' ' + normalize(t) + ' '));
+    }
+    // Two-tier crisis classification — mirrors the database trigger exactly.
+    // Returns 1 (Tier 1: never store, crisis panel), 2 (Tier 2: store as
+    // pending with the moderator flag), or 0 (no crisis vocabulary).
+    function crisisTier(text) {
+      const hay = ' ' + normalize(text) + ' ';
+      if (hasTerm(hay, METHOD_TERMS)) return 1;
+      const crisisHit = hasTerm(hay, CRISIS_TERMS) || hasTerm(hay, PAST_FORMS);
+      if (!crisisHit) return 0;
+      if (hasTerm(hay, PRESENT_STRONG)) return 1;
+      const pastFraming = hasTerm(hay, PAST_FORMS) || hasTerm(hay, PAST_MARKERS);
+      if (!pastFraming && hasTerm(hay, PRESENT_TIME)) return 1;
+      return 2;
     }
     function looksSpammy(text) {
       const links = (text.match(/https?:\/\//gi) || []).length;
@@ -450,7 +514,8 @@ import Wayline from '../components/Wayline.astro';
       }
 
       const combined = `${body} ${signoff}`;
-      if (screened(combined, CRISIS_TERMS)) {
+      const tier = crisisTier(combined);
+      if (tier === 1) {
         localStorage.setItem(LAST_KEY, String(Date.now()));
         logSafetyEvent('crisis');
         showPanel('panel-crisis');
@@ -471,6 +536,9 @@ import Wayline from '../components/Wayline.astro';
           signoff: signoff || null,
           parent_id: replyParent ? replyParent.id : null,
           status: 'pending',
+          // Tier 2 testimony carries the moderator flag; the database
+          // trigger recomputes it server-side either way.
+          screen_flag: tier === 2 ? 'crisis_terms' : null,
         });
         localStorage.setItem(LAST_KEY, String(Date.now()));
         form.reset();
