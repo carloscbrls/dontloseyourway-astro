@@ -351,3 +351,28 @@ Two changes Carlos approved on the forum v1 launch report: soften the blunt cris
 This section; `qa/screen-v2.sql` (the full migration, idempotent, kept for the record); Village Calendar entry for the pass + the sweep-entry description update; Change Log line (2026-11-25 15:12 PT); routines doc updated. Source pushed to `carloscbrls/dontloseyourway-astro` branch `village-phase1` (chapel.astro, qa/screen-v2.sql, qa/BUILD-REPORT.md).
 
 Note for the record: the forum v1 build section does not appear in either local BUILD-REPORT copy (this file or the stale `dontloseyourway-astro` clone) — v1's facts stand in its Change Log line (2026-11-25 14:53 PT) and Calendar entry; this v2 section is appended here so the Chapel record continues in one place.
+
+---
+
+# SoundCloud embed block — incident + fix (2026-11-25, reported ~15:23 PT)
+
+**Report (Carlos):** on dontloseyourway.cc3po.com, where the SoundCloud players sit, his browser showed "This content is blocked. Contact the site owner to fix the issue." Other page content was fine.
+
+**Reproduction (fleet Firefox recipe, live site):** ALL FOUR SoundCloud iframes were blocked — the series playlist player on Home and on Start Here, and both Ep. 6 track players on Start Here ("Start with my story"). Frames rendered empty; the Start Here console carried the explicit error: "Content-Security-Policy: The page's settings blocked the loading of a resource (frame-src) at https://w.soundcloud.com/player/?url=…". (The quoted sentence is Firefox's standard in-frame message for a CSP frame block — the exact text Carlos saw.) Before-screenshots: `qa/shots/embed-block-home-before.png`, `qa/shots/embed-block-start-here-before.png`.
+
+**SoundCloud side — CLEARED with evidence:** playlist 2334756882 and all 8 of its tracks (incl. Ep. 6 Intro, track 2444648031, and Ep. 6, track 2399717535) read `embeddable_by: all`, `sharing: public` via the API; the oEmbed endpoint returns canonical embed iframes for the playlist and both Ep. 6 track URLs. No embed permission was off; nothing on SoundCloud needed changing.
+
+**Site markup — CLEARED:** the iframe srcs are the standard widget form (the playlist uses the api.soundcloud.com URL form; the tracks use permalink URLs, which the widget resolves — proven live below). The site ships no CSP of its own (no `_headers`, no `netlify.toml` in the repo).
+
+**Root cause — the estate-wide Cloudflare CSP:** the live response carries a Content-Security-Policy whose `frame-src` allowed only js.stripe.com, challenges.cloudflare.com, and YouTube origins. Source: Cloudflare zone cc3po.com, ruleset `629a5dd439a04a7399298c102232305d` ("CORS for Gateway APIs"), rule `02ee341c57d046d9819dcfa1bf9f8438` — "Set YouTube-friendly CSP and X-Frame-Options", expression `true` (every host in the zone), last updated 2026-11-25T09:37:07Z. `https://w.soundcloud.com` was never in the list, so every browser refused every SoundCloud iframe — on this site and, by the same rule, on every *.cc3po.com host.
+
+**Fix (at the broken layer; no site files changed, no deploy):** PATCHed that one rule through the Cloudflare API — `frame-src` gained exactly one origin: `https://w.soundcloud.com`. Verified by re-reading the ruleset: all 4 rules intact, every other directive and the X-Frame-Options header byte-identical. The header is applied at the edge per request, so the fix was live on the next fetch (live header check confirms the new frame-src). Side effect, beneficial: the same one-token change unblocks SoundCloud embeds estate-wide (e.g., music.cc3po.com release pages were under the identical block).
+
+**Live verification (fleet Firefox recipe):**
+- Start Here: Ep. 6 Intro player renders (artwork, waveform, 0:54) and Ep. 6 player renders (album artwork, waveform, 29:05, play count) — `qa/shots/embed-fix-start-here-after.png`.
+- Home + Start Here: the series playlist player renders (C07 artwork, Welcome waveform 3:17, track list) — `qa/shots/embed-fix-home-playlist.png`, `qa/shots/embed-fix-start-here-playlist.png`. Network chain all 200s (player document, api-widget playlists/tracks calls). Zero CSP console errors after the fix (the only console noise is a benign DataDome SameSite cookie notice inside the widget).
+- **Playback proof:** clicking Play on the Ep. 6 Intro player fetched the real audio stream — `api-widget.soundcloud.com/media/soundcloud:tracks:2444648031/…/stream/hls` → `playlist.m3u8`, `init.mp4`, and audio segments from `playback.media-streaming.soundcloud.cloud`. The series is playable from the pages.
+- **Axe gate (live):** fleet axe-gate on / and /start-here/ — **0 violations, PASSED**.
+- Nothing else changed: zero site files edited; all copy and the crisis spec (strip + Quill block, 988 + TALK) untouched — there was nothing on the site to change.
+
+**Paperwork:** this section; Village Calendar entry; Drive Change Log line (2026-11-25). The BUILD-REPORT push rides the token-connector route to `village-phase1` as usual.
