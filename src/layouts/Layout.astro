@@ -49,7 +49,10 @@ const canonical = new URL(Astro.url.pathname, 'https://dontloseyourway.cc3po.com
 
   <header class="site-header">
     <div class="header-inner">
-      <a href="/" class="brand">Don't Lose Your Way</a>
+      <div class="brand-block">
+        <a href="/" class="brand">Don't Lose Your Way</a>
+        <span class="brand-credit">by CC3PO</span>
+      </div>
       <nav aria-label="Main navigation">
         <ul class="nav-list">
           <li><a href="/start-here">Start Here</a></li>
@@ -92,7 +95,10 @@ const canonical = new URL(Astro.url.pathname, 'https://dontloseyourway.cc3po.com
         </ul>
       </nav>
       <p class="footer-crisis"><a href="tel:988">Crisis: 988</a></p>
-      <p class="footer-built">Built with ❤️ by CC3PO — AI-powered tools for real people</p>
+      <div class="footer-brand">
+        <img class="footer-mark" src="/media/cc3po-mark.svg" alt="" width="32" height="32" />
+        <p class="footer-attribution">Don't Lose Your Way is a CC3PO project</p>
+      </div>
     </div>
   </footer>
 
@@ -248,6 +254,16 @@ const canonical = new URL(Astro.url.pathname, 'https://dontloseyourway.cc3po.com
       display: inline-flex;
       align-items: center;
     }
+    .brand-block { display: flex; flex-direction: column; }
+    /* The CC3PO credit whispers: unlinked, subordinate, never a door. */
+    .brand-credit {
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: -0.375rem;
+      padding-bottom: 0.375rem;
+    }
     .nav-list {
       list-style: none;
       display: flex;
@@ -306,7 +322,19 @@ const canonical = new URL(Astro.url.pathname, 'https://dontloseyourway.cc3po.com
     .footer-links a:hover { color: var(--text); }
     .footer-crisis { margin: 0 0 0.75rem; }
     .footer-crisis a { font-weight: 600; display: inline-flex; align-items: center; min-height: 44px; padding: 0.5rem 0.75rem; }
-    .footer-built { color: var(--muted); font-size: 0.8125rem; margin: 0; }
+    /* Brand attribution — the C07 Spark Node mark (Mark Small variant, on-dark
+       colorway) + one quiet line. Unlinked on purpose: this property carries
+       no outbound commercial doors. Clearspace ≥ spark height (20% of the
+       32px mark ≈ 6.4px) on all sides: gap 10px, block margin-top 2.25rem. */
+    .footer-brand {
+      margin-top: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.625rem;
+    }
+    .footer-mark { display: block; width: 32px; height: 32px; }
+    .footer-attribution { color: var(--muted); font-size: 0.8125rem; margin: 0; }
 
     input, textarea, select { font-size: 16px; }
 
@@ -315,6 +343,7 @@ const canonical = new URL(Astro.url.pathname, 'https://dontloseyourway.cc3po.com
     @media (max-width: 480px) {
       .section { padding: 2.75rem 0 3.25rem; }
       .header-inner { justify-content: center; text-align: center; }
+      .brand-block { align-items: center; }
       .nav-list { justify-content: center; }
     }
   </style>

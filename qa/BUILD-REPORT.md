@@ -73,3 +73,35 @@ Nothing in Carlos's first-person voice was written. Crisis spec untouched (strip
 
 ## Paperwork
 Village Calendar entry added ("CC3PO Village — Background Work", event a0lod30ppnk8cnslm5omemjtqc, 2026-11-25 14:07 PT, show as free). Change Log line appended to Drive doc 1KUs-319hRYzk4H_RTbMolZkpxYxsozezOz_1L81yo60 (2026-11-25 14:12 PT line).
+
+---
+
+# Header/Footer Pass — 2026-11-25 (14:26 PT ask: "restructure the header and footer — the CC3PO logo somewhere")
+
+Carlos asked for the header and footer to be restructured and for the CC3PO logo to appear on the site. One file changed (`src/layouts/Layout.astro`, so all 15 routes move together) + one asset added (`public/media/cc3po-mark.svg`). Netlify deploy 6b0762388729b33473b7fa2a (folder deploy of `dist/`, published state `ready`, 14:33 PT). Source pushed to `village-phase1` in the same pass.
+
+## What changed
+- **Footer — brand attribution (new).** At the foot of the footer, set apart from everything above it: the **C07 Spark Node mark** (Mark Small variant, on-dark colorway — white C, #e8506b spark — copied unmodified from the logo masters; displayed at 32px, the guide's small-variant band; clearspace ≥ spark height honored: 10px gap to the line below, 2.25rem margin above) over one quiet line: **"Don't Lose Your Way is a CC3PO project."** The mark and the line are **unlinked** — no anchor exists in the block (verified in the built HTML and by scripted live DOM check: 0 links). This property carries no outbound commercial doors; the credit is a colophon, not a funnel.
+- **Footer — the old credit line is gone.** "Built with ❤️ by CC3PO — AI-powered tools for real people" (Phase 1 builder microcopy) was replaced by the attribution block: one credit, not two, and the surviving one carries no tagline — nothing on this footer sells.
+- **Header — brand lockup restructured.** The brand is now a two-line lockup: "Don't Lose Your Way" (Newsreader, unchanged) with a small subordinate credit beneath it — **"by CC3PO"** (Inter, 0.75rem, letterspaced uppercase, muted). It is a plain `<span>`, **unlinked**; the brand link's accessible name is unchanged. Decision, per the brief's either/or: the header carries the *text* credit only and the footer carries the *mark* — the sticky header of a crisis-adjacent space stays the site's own name first and largest, and no logo competes with it at the top of every page. Nav items, order, and targets are untouched.
+
+## Untouched, by design
+- Crisis architecture: persistent strip (988 + text TALK to 741741) and Quill's full crisis block immediately before the footer — byte-identical, position-identical. Footer "Crisis: 988" line unchanged. TALK keyword not moved in either direction (ratification still pending with Carlos).
+- Every word of Carlos's copy: a full text diff of all 15 built pages against the pre-pass `dist/` shows exactly three changed lines per page — `+by CC3PO`, `−Built with ❤️ by CC3PO — AI-powered tools for real people`, `+Don't Lose Your Way is a CC3PO project` — and nothing else.
+
+## New / changed microcopy (functional only — for Carlos's review)
+1. Header credit: "by CC3PO" (new)
+2. Footer attribution: "Don't Lose Your Way is a CC3PO project" (new)
+3. Removed: "Built with ❤️ by CC3PO — AI-powered tools for real people" (replaced by #2)
+Nothing in Carlos's first-person voice was written; no existing line of his was reworded.
+
+## Six gates — header/footer pass
+1. **Functional — PASS (scoped).** No forms exist by design. The new mark serves from `/media/cc3po-mark.svg` (scripted check: image loaded, natural size > 0, rendered exactly 32×32 on all routes/viewports). The attribution block contains zero links (built-HTML grep + live DOM check). All 15 routes serve on the live URL.
+2. **Axe — PASS.** `axe-gate.mjs`, WCAG 2.2 AA tag set: **0 violations on all 15 routes** on the local preview AND re-run against the live URL post-deploy (load state; menu-open/form-error n/a — no menu toggle, no forms). The mark's `alt=""` (named by the adjacent attribution line) introduced no violations.
+3. **Mobile QA — PASS.** Scripted Firefox run (fleet recipe), 390/375/360 × all 15 routes, local preview and live URL: horizontal overflow **0px everywhere**, exactly one h1 per page, no sub-44px targets among header/footer/crisis-strip links, brand credit + attribution + 32×32 mark confirmed present on every route. Screenshots in `qa/shots/`: `header-390.png` + `header-390-live.png` (390px header, local + live), `header-1280.png` (desktop header), `footer-390.png` + `footer-390-start-here.png` (390px footers), read and verified: lockup stacks cleanly centered on mobile, mark reads as a spark at 32px, attribution sits quiet below "Crisis: 988".
+4. **Live verification — PASS.** Public DNS via Cloudflare DoH (host resolves through Cloudflare to the Netlify site); Netlify published deploy `6b0762388729b33473b7fa2a` state `ready`; live axe + live mobile runs above; live 390px header screenshot matches the local build; `/about` fetched live post-deploy (22:37 UTC crawl) — copy verbatim, crisis lines intact.
+5. **Sources of truth — PASS.** Copy only from the verbatim inventory (diff proof above); the mark is the unmodified master file from `~/workspace/content/cc3po/logo-2026-11-25/master/mark-small-on-dark.svg` per LOGO-GUIDE.md (small variant under 40px, on-dark colorway); no prices/NAP on this property.
+6. **Contrast-safe tokens — PASS.** No new colors: the credit and attribution use the existing `--muted` on `--bg` (the same pairing the footer already shipped with); the mark ships in its own Nightshift colorway (#ffffff / #e8506b on dark). No text sits on the mark or on any gradient.
+
+## Paperwork
+Village Calendar entry added ("CC3PO Village — Background Work", 2026-11-25 14:26 PT, show as free). Change Log line appended to Drive doc 1KUs-319hRYzk4H_RTbMolZkpxYxsozezOz_1L81yo60.

@@ -40,6 +40,12 @@ Design-and-assets pass on top of Phase 1 (deploy 6b075d3cfb73e61b6d23f8fa; full 
 - Podcast page now frames the solo story show under the placeholder heading "The Don't Lose Your Way Podcast", explicitly labeled a working title on the page. The show's real name is an open decision (GAPS H2 collisions) — when Carlos names it, update that heading + the working-title line only.
 - "The Man I Hide" is deliberately NOT on this site yet: no public SoundCloud version exists (it premieres in the Circuit Listening Room first). Add it, story-framed via the series pattern, only after its public SoundCloud release.
 
+## Header/footer pass (2026-11-25, later still)
+
+Carlos asked for a header/footer restructure with the CC3PO logo on the site (full record in `qa/BUILD-REPORT.md`). What a future builder needs to know:
+- The footer now ends with the brand attribution: the C07 Spark Node mark (`public/media/cc3po-mark.svg` — the unmodified Mark Small on-dark master) at 32px over the line "Don't Lose Your Way is a CC3PO project". **Deliberately unlinked** — this property carries no outbound commercial doors; do not "helpfully" link the mark or the line to cc3po.com. The Phase 1 "Built with ❤️ by CC3PO — AI-powered tools for real people" line was removed in this pass (one quiet credit, no tagline).
+- The header brand is a two-line lockup: the site name over a small unlinked "by CC3PO" text credit (`.brand-credit`). Text credit in the header, mark in the footer — that split is deliberate (the site's own name stays primary in the sticky header).
+
 ## Phase 2 (deferred, by design)
 
 Chapel live build (safety-gated) · .com redirect + registrar transfer ·
