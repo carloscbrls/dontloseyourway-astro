@@ -1,0 +1,43 @@
+{
+  "note": "Byte-for-byte extracts from Carlos Cabrales, Shattered and Reforged (Google Docs/docx on his Drive, exported 2026-11-25) — never retype; regenerate via extraction if the manuscript changes. Multi-paragraph quotes are joined with a single space, per the withPullquote precedent.",
+  "quotes": [
+    {
+      "id": "dedication",
+      "text": "You weren’t weak. You were just waiting to be reforged.",
+      "source": "Shattered and Reforged — Dedication (book front matter)",
+      "caption": "From the dedication of Shattered and Reforged, his book in progress",
+      "placement": "about, after the 'What This Is' section"
+    },
+    {
+      "id": "crash",
+      "text": "In tech, a crash is just a system’s cry for help. It’s not failure—it’s a call for repair.",
+      "source": "Shattered and Reforged — Chapter One: The Day I Crashed",
+      "caption": "From Shattered and Reforged, Chapter One",
+      "placement": "about, after the 'Boundaries' section"
+    },
+    {
+      "id": "voice",
+      "text": "This song became my voice when I had none.",
+      "source": "Shattered and Reforged — Chapter One (introducing the song)",
+      "caption": "From Shattered and Reforged, Chapter One",
+      "placement": "about, closing section 'From the book, from the songs'"
+    },
+    {
+      "id": "chorus",
+      "lines": [
+        "No more silence, no more shame,",
+        "I'm taking back my life, reclaiming my name."
+      ],
+      "source": "“Shattered and Reforged” — song lyrics (chorus), as printed in the book, Chapter One; song on My Unspoken Journey",
+      "caption": "From “Shattered and Reforged,” the song",
+      "placement": "about, closing section 'From the book, from the songs'"
+    },
+    {
+      "id": "still-here",
+      "text": "You’re still here. There’s still more for you.",
+      "source": "Shattered and Reforged — Chapter One (closing line)",
+      "caption": "From Shattered and Reforged, Chapter One",
+      "placement": "about, closing section, final quote"
+    }
+  ]
+}

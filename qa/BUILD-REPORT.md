@@ -105,3 +105,203 @@ Nothing in Carlos's first-person voice was written; no existing line of his was 
 
 ## Paperwork
 Village Calendar entry added ("CC3PO Village — Background Work", 2026-11-25 14:26 PT, show as free). Change Log line appended to Drive doc 1KUs-319hRYzk4H_RTbMolZkpxYxsozezOz_1L81yo60.
+
+
+# Resources + About Quotes + Partners Pass — 2026-11-25 (14:40 PT ask: "get creative with our resources… and bits and pieces from my book"; 14:44 PT scope addition: the partnership/funding door)
+
+Carlos directed three things: (A) curate real external resources onto /resources and start building the site's own peer resources; (B) enrich /about with exact quotes from his book *Shattered and Reforged* (Drive) and his songs; (C) build out the partnership/funding door on /partners and research real funding pathways. Book/lyrics use was explicitly authorized by Carlos for these two uses. Netlify deploy `6b076760cef6ae014bfcfed2` (folder deploy of `dist/`, published state `ready`). Source pushed to `village-phase1` in the same pass. All edits are ADD-ONLY through `scripts/gen-pages.mjs` hooks (the established pattern) plus three hand-authored pages; his copy is byte-untouched (proof in Gates).
+
+## Part B — About quotes (placed first; they anchor the pass)
+
+Five exact quotes, each asserted byte-for-byte against the book exports (Google Docs/docx on Drive, exported 2026-11-25) before being written to `scripts/about-quotes.json`; the generator renders them from that file, never retyped. Multi-paragraph quotes are joined with a single space, per the withPullquote precedent. Rendered as `.pullquote` + `.quote-source` caption (one additive CSS rule in Layout.astro).
+
+1. **Dedication** — after the "What This Is" section: "You weren’t weak. You were just waiting to be reforged." — *Shattered and Reforged*, Dedication (front matter; the two sentences are separate runs in the .docx, joined with one space). Caption: "From the dedication of Shattered and Reforged, his book in progress"
+2. **Crash** — after the "Boundaries" section: "In tech, a crash is just a system’s cry for help. It’s not failure—it’s a call for repair." — Chapter One (two paragraphs joined with one space). Caption: "From Shattered and Reforged, Chapter One"
+3. **Voice** — closing section "From the book, from the songs": "This song became my voice when I had none." — Chapter One (song-section intro). Caption: "From Shattered and Reforged, Chapter One"
+4. **Chorus** — closing section, two lines with a line break: "No more silence, no more shame," / "I'm taking back my life, reclaiming my name." — the song "Shattered and Reforged" (on *My Unspoken Journey*), chorus as printed in the book's Chapter One. Byte note: "I'm" carries a STRAIGHT apostrophe in the source (byte-confirmed) — not "fixed". Caption: "From “Shattered and Reforged,” the song"
+5. **Still here** — closing section, final quote: "You’re still here. There’s still more for you." — Chapter One closing line. Caption: "From Shattered and Reforged, Chapter One"
+
+**Forbidden sources honored (safe messaging):** nothing from the letter's contents (the book section "The Letter: Help Not Being Myself" was not quoted — e.g. its "please see me" line stays unquoted); no method detail ("A bridge. A thousand thoughts. A plan." — not quoted); "I’ve circled bridges with intent." (Introduction) not quoted; none of the book's family health details quoted.
+
+## Part A1 — Curated external resources (appended to /resources, after his verbatim copy)
+
+Every entry verified 2026-11-25 against its official site (or an official-adjacent source where noted). Grouped on the page as: Talk to a person / If home isn't safe / Grief / Veterans, LGBTQ+ youth, and trans peers / En español / Rent, food, and bills.
+
+- **California Peer-Run Warm Line** — 1-855-600-WARM (9276), call or text; Mental Health Association of San Francisco; mentalhealthsf.org/peer-run-warm-line. Peer counselors with lived experience; non-crisis. Hours have changed repeatedly (MHASF currently lists Mon/Tue/Wed/Fri 7 AM–11 PM, Thu 8 AM–10 PM) — the page deliberately says "check the site for current hours" instead of hard-stating them.
+- **NAMI HelpLine** — 1-800-950-6264; text NAMI to 62640; nami.org; Mon–Fri 10 AM–10 PM ET; explicitly not a crisis line.
+- **NAMI San Joaquin County** — namisanjoaquin.org; 209-269-2148 (not a crisis line); Stockton affiliate running peer Connection groups, family support groups, and a Creative Expression Group.
+- **SAMHSA National Helpline** — 1-800-662-HELP (4357); samhsa.gov; 24/7, English/Spanish, substance-use + mental-health treatment referral.
+- **National Domestic Violence Hotline** — 1-800-799-7233; text START to 88788; thehotline.org.
+- **RAINN** — 1-800-656-4673; rainn.org.
+- **Childhelp National Child Abuse Hotline** — 1-800-422-4453 (call or text); childhelphotline.org.
+- **Dougy Center** (grief, children/families) — dougy.org. **What's Your Grief** — whatsyourgrief.com.
+- **Veterans Crisis Line** — 988 + press 1, or text 838255; veteranscrisisline.net.
+- **The Trevor Project** — 1-866-488-7386; text START to 678-678; thetrevorproject.org.
+- **Trans Lifeline** — 1-877-565-8860; translifeline.org (peer-run by/for trans people; hours omitted — sources conflict).
+- **988 en español** — call 988 + press 2; text AYUDA to 988; chat 988lifeline.org/es/chat. **Crisis Text Line en español** — text AYUDA to 741741 or WhatsApp 442-AYUDAME (crisistextline.org/es). Note: AYUDA is CTL's own factual Spanish routing keyword; the site's English crisis keyword remains TALK everywhere, untouched.
+- **211 / 211 San Joaquin** — dial 2-1-1; 211sj.org; 1-800-436-9997; text ZIP to 898211; 24/7, 200+ languages (Family Resource Center). National: 211.org.
+- **Second Harvest of the Greater Valley** — localfoodbank.org; 209-239-2091; Feeding America food bank for San Joaquin + Stanislaus counties (Manteca).
+- **HUD housing counseling** — 1-800-569-4287; hud.gov/counseling (free HUD-approved counselors).
+
+His existing Resources content (988 block, Talkspace block + affiliate disclosure, book list, journaling prompts, grounding tools) stays first and verbatim; a "Pages from this space" block above the directory links the three new pages below.
+
+
+## Part A2 — The site's own starter resources (3 new pages, peer-voiced, non-clinical, full text for Carlos's review)
+
+Each page is clearly marked peer-made near the top, carries the site-wide crisis strip + Quill block via Layout, and weaves crisis lines into its own copy. Nothing is written in Carlos's first-person voice.
+
+### /resources/tonight/ — "For tonight"
+
+> **For tonight**
+>
+> This page was made by people who have had nights like this one. It is peer support, not medical advice, and it is not a crisis service. If you might act on what you're feeling, skip the rest of this page and call or text 988, or text TALK to 741741, right now.
+>
+> **First: make the next hour safer**
+>
+> Put distance between you and anything you could use to hurt yourself. Another room. A locked drawer. A friend's house. Time and distance are not small things — they are the thing.
+>
+> Don't be alone with it if you can help it. Go where people are — a porch, a store that's open late, a roommate's doorway. If nobody is near, call the California Peer-Run Warm Line at 1-855-600-WARM (9276), or call or text 988 and just stay on the line.
+>
+> Skip alcohol and anything else tonight. They turn the volume up on exactly the feelings you're trying to survive.
+>
+> **Then: ten minutes at a time**
+>
+> You don't have to solve your life tonight. You only have to get through the next ten minutes. Then the next ten.
+>
+> Cold water on your face or hands for 30 seconds. Ice held in your hands works too. It gives your body something loud and harmless to pay attention to.
+>
+> Breathe out slower than you breathe in. In for four, out for six, a few rounds. The long exhale is the part that tells your body the emergency can stand down a little.
+>
+> Eat something small. Drink water. Low fuel makes everything feel more final than it is.
+>
+> **Say it out loud to someone**
+>
+> A text counts. "I'm not okay tonight" is a complete sentence. If you don't know how to start, How to tell someone has first lines you can borrow.
+>
+> **Plan for morning**
+>
+> Before you sleep, put one thing on tomorrow's list that is small and real: a shower, a call, a walk around the block. And if tonight gets worse instead of better, the plan is 988 — any hour, no explanation needed.
+>
+> You found this page at the right time: before, not after. Stay.
+
+### /resources/how-to-tell-someone/ — "How to tell someone"
+
+> **How to tell someone**
+>
+> This page was made by people who have had to find these words themselves. It is peer support, not professional advice. If you might act on what you're feeling, tell someone by calling or texting 988, or text TALK to 741741 — those count as telling someone, and they are open all night.
+>
+> **Why the first sentence is the hardest**
+>
+> Most people don't stay silent because they have nothing to say. They stay silent because the first sentence feels like it has to explain everything. It doesn't. The first sentence only has to open the door.
+>
+> **Pick the safest door, not the perfect one**
+>
+> The right person is not always the closest person. It's the one most likely to listen without fixing, judging, or panicking — a friend, a sibling, a coworker, a pastor, a sponsor. Or a warm line full of strangers who do this every day. Texting is allowed. Writing it down and handing it over is allowed.
+>
+> **Borrow a first line**
+>
+> Copy one of these. Change what you need to. Sending it as-is is fine too.
+>
+> - "I'm not okay. I don't need you to fix it — I just need you to know."
+> - "I've been having a hard time, and I didn't want to carry it alone anymore."
+> - "Can I tell you something heavy? You don't have to say the right thing back."
+> - "I'm safe right now, but I've had thoughts that scare me, and I wanted someone to know."
+>
+> **Say what you need**
+>
+> People guess badly. Make it easy for them: "Just listen." "Check on me tomorrow." "Sit with me." "Help me find a number to call." Asking for a specific thing is not a burden — it's a map.
+>
+> **If it goes badly**
+>
+> Sometimes the first person freezes, or says the wrong thing, or isn't who you hoped. That is information about that conversation — not a verdict on you, and not a verdict on asking. Try the next door: call or text 988 any time, or call the California Peer-Run Warm Line at 1-855-600-WARM (9276) — peers who expect exactly this call.
+>
+> **If someone tells you**
+>
+> Listen more than you talk. Believe them. Ask what they need. If you're worried they might act on it, ask directly — asking does not plant the idea. Stay, and help them call 988 if it comes to that. You don't have to be a professional. You have to be a person who stayed.
+>
+> And if tonight is the night you're deciding whether to say it at all: say it. Start with the For tonight page if you need the next hour first.
+
+### /resources/when-the-rent-is-due/ — "When the rent is due"
+
+> **When the rent is due**
+>
+> This page was made by people who know what the end of the month can feel like. It is peer support and general information — not legal advice, and not a crisis service. If the money stress turns into something darker, stop and use the For tonight page, or call or text 988.
+>
+> **Start with one call: 2-1-1**
+>
+> Dial 2-1-1 from any phone. It's free, confidential, and staffed by people whose whole job is knowing what help exists near you — rent assistance, utility help, food, and more, in over 200 languages. In San Joaquin County, 211 San Joaquin can also be reached at 1-800-436-9997, or by texting your ZIP code to 898211.
+>
+> **Talk to your landlord before the due date, not after**
+>
+> Silence reads as not caring. A short conversation before the date passes reads as a person with a plan. Ask about a payment plan, a split payment, or a short extension — and get whatever you agree on in writing, even if it's just a text you save.
+>
+> A script, if you need one: "I'm writing because my rent will be short this month. I can pay part on the due date and the rest two weeks later. I wanted you to hear it from me before the due date, not after." You don't owe anyone your whole story. The dates and the amounts are enough.
+>
+> **Know the shape of it**
+>
+> A pay-or-quit notice is not an eviction. In California, only a court can order you to leave, and that process takes time — time you can use. Don't move out in a panic over a notice alone. Free HUD-approved housing counselors can talk through your specific situation: 1-800-569-4287.
+>
+> **Utilities and food: take the pressure off where you can**
+>
+> Call your utility before a shutoff, not after — most offer payment plans, and discount and assistance programs exist for exactly this. Ask 211 what you qualify for. For food, Second Harvest of the Greater Valley (209-239-2091) serves San Joaquin and Stanislaus counties. Using the food bank for a month is not failure — it's how you keep the rent money pointed at the rent.
+>
+> **Triage, in order**
+>
+> - **Roof** — the rent, or the payment plan you agreed to.
+> - **Utilities** — the minimum that keeps the lights and water on.
+> - **Food** — with the food bank carrying part of it.
+> - **Everything else** — minimum payments, and a call to any lender you can't pay, before the due date. Same as the landlord.
+>
+> One call a day is progress. You don't have to fix the whole spiral tonight.
+
+
+## Part C — Partners page strengthening (add-only, after his verbatim copy)
+
+His Partners copy (mission, platform offers, partnership opportunities, "Get In Touch") stays verbatim and in place. Appended after it, a "Ways to Work With Us" structure:
+
+- **Who should reach out** — mental-health and peer-support organizations (warm lines, crisis services, community clinics); licensed clinicians (including Therapist's Chair podcast guests); foundations and funders; businesses and sponsors; educators, creators, and community leaders.
+- **What partnership can look like** — resource sharing (their services on our Resources page — already happening with this pass; this space shared with the people they serve); co-promotion (campaigns, events, awareness moments, both directions); funding the build (sponsorships and grants for production, accessibility, outreach — with the honest mechanism stated on the page: "Grant funding for this project can be received through a 501(c)(3) fiscal sponsor, so foundations can support the work even though the project itself is independent."); voices (clinicians on the podcast; community voices anonymous + consented).
+- **Start the conversation** — the existing estate contact route: the business line **(209) 701-1137** (tel link), answered/taken as a message by Callie; plus a redirect line sending people in crisis to 988 / Resources instead. No email address was invented. **No form was built** — proposal flagged for Carlos: a partnership form could reuse the forum's Supabase pattern if call volume ever warrants it; the phone line is the live path today.
+
+## Part C (research) — Partnership & funding pathways, verified 2026-11-25 at official sources
+
+Eligibility stated honestly throughout: this is a small, creator-led project held by a for-profit (CC3PO LLC). Most grant money is nonprofit-only; the fiscal-sponsorship route is the real workaround, and it is verified below, not assumed.
+
+1. **Crisis Text Line — Community Partnerships** (crisistextline.org/community-partnerships, read 2026-11-25). What it is: co-branded text keywords ("Text ORGANIZATION to 741741"), customizable promotion assets, social/PR collaboration, and — after a keyword reaches 200 conversations — a personalized dashboard of anonymized, aggregated community data (topics, peak times, demographics). Their ~100+ partners are mostly nonprofits, and the program also names corporate partners; nothing on the page limits it to nonprofits, but a project this size should expect an application/conversation, not a self-serve signup. Fit: highest of anything on this list — the site already routes visitors to 741741 on every page, and the dashboard would become the project's first real impact evidence.
+2. **Fractured Atlas — Fiscal Sponsorship** (fracturedatlas.zendesk.com requirements + program info sheet, read 2026-11-25). What it is: a 501(c)(3) arts sponsor holds a restricted fund for the project; donations and grants are made to Fractured Atlas for the project's purposes and re-granted to it. Eligibility: the project must be **artistic**, have **public benefit**, and be **non-commercial in nature**; any legal entity (individual, LLC, corporation) with a US tax ID can be the sponsored entity; Professional/Organization membership required; administrative fee ~6% of funds (program materials). Fit: this is the key that unlocks #3 and most foundation grants. Boundary: the sponsored fund must stay non-commercial — the free peer space (site, resources, podcast production) fits; CC3PO's commercial work stays outside the fund.
+3. **San Joaquin Community Foundation — Community Health Fund** (sanjoaquincf.org program materials, read 2026-11-25). 2025 cycle: $125,000 total available, awards up to $40,000, two-step (Letter of Interest, then invited application); focus areas: improving healthcare services, promoting health outcomes, supporting medical education; must benefit San Joaquin County residents. **Eligibility: 501(c)(3) nonprofits and public education agencies only — this project cannot apply directly.** The workaround is documented in the same foundation's own CEMI RFP, which explicitly accepts organizations fiscally sponsored by a 501(c)(3) — i.e., apply via #2, or with a nonprofit partner as lead applicant.
+4. **NAMI San Joaquin County** (namisanjoaquin.org, read 2026-11-25). The local affiliate (Stockton; 209-269-2148) runs peer Connection support groups, family support groups, and a Creative Expression Group. Partnership shape is relationship-first, not funding: resource sharing (their groups are listed on our Resources page as of this pass), story-sharing, co-promotion, event presence. NAMIWalks is the movement's fundraising-walk model if a walk team is ever wanted.
+5. **AFSP — Greater Sacramento Chapter (Sacramento + Central Valley)** (afsp.org; afspwalks.donordrive.com/SacramentoWalk, read 2026-11-25). Out of the Darkness community walks accept teams and sponsors (Sacramento walk: September 2026 at the State Capitol; the chapter's area leadership covers the Central Valley); chapters also run education programs and speaker bureaus. Partnership shape: a DLYW walk team, walk sponsorship, co-promotion. Noted with approval: AFSP's own walk pages use "text TALK to 741741" — the same keyword standard this site runs.
+6. **County behavioral-health funding (San Joaquin / Stanislaus) — honest status.** Prevention and early-intervention money (MHSA, transitioning to BHSA) flows through county behavioral-health plans to *contracted nonprofit providers* via periodic RFPs. No standing open application exists for an independent creator project, and none is claimed here. The realistic route is partnering with an already-funded provider (the warm-line operator and NAMI SJC are the natural first doors), not applying to the county directly.
+7. **Corporate sponsorship norms (for mental-health content creators).** The working pattern: sponsors underwrite a named, bounded thing — a podcast season, the resource pages' upkeep, an awareness-month campaign — in exchange for tasteful credit, with disclosure. This site already carries an affiliate-disclosure pattern (Resources/Talkspace); sponsorship credit would be labeled the same way. Realistic first sponsors are local: Central Valley businesses and health-adjacent organizations in Carlos's existing Chamber-of-Commerce orbit. No rates are stated anywhere — none have been set.
+
+### Prioritized outreach list (DRAFTS ONLY — nothing sent, nothing applied for)
+
+1. **Crisis Text Line community partnerships** — inquire about a co-branded keyword for this community + partner assets. First because the site already sends people there daily; the 200-conversation dashboard becomes impact evidence for every later funder conversation.
+2. **Fractured Atlas fiscal sponsorship** — membership + application for the DLYW project fund. Second because it unlocks #5 and tax-deductible donations generally.
+3. **NAMI San Joaquin County** — introduction + resource sharing (their listing is already live on our Resources page); explore a Creative Expression Group collaboration.
+4. **AFSP Greater Sacramento Chapter** — walk team for September 2026 + chapter co-promotion; sponsorship inquiry.
+5. **San Joaquin Community Foundation** — watch the Community Health Fund LOI cycle; apply only via fiscal sponsor (#2) or a nonprofit lead partner.
+6. **County-contracted provider partnership** — approach one funded provider (warm-line operator first) as a content/resource partner rather than approaching the county for money.
+
+
+## Six gates — resources + quotes + partners pass
+
+1. **Functional — PASS.** All 18 routes build and serve (15 previous + 3 new). New internal links resolve (/resources → the three pages; tonight ↔ how-to-tell-someone ↔ when-the-rent-is-due cross-links; partners → /resources). All curated external links point at URLs verified at official sources on 2026-11-25. tel:/sms: links use the verified numbers above. No forms added.
+2. **Axe — PASS.** `axe-gate.mjs`, WCAG 2.2 AA tag set: **0 violations on all 18 routes** on the local preview, and **0 on the 6 changed/new routes re-run against the live URL** post-deploy (load state; menu-open/form-error n/a — no menu toggle, no forms on these pages).
+3. **Mobile QA — PASS.** Scripted Firefox (fleet recipe), 390/375/360: horizontal overflow **0px** on all routes (the 15 original routes via the header/footer QA script, unchanged by this pass except the one additive caption CSS rule; the 6 changed/new routes via `dlyw-resources-qa.mjs`, local + live), exactly one h1 per page, crisis strip present on every page including the three new ones. Note on target size: inline links inside prose paragraphs render at the prose line height (20px) — the same as the site's pre-existing prose links, including Carlos's own Talkspace link; WCAG 2.2 target-size exempts inline links within text blocks, and axe confirms 0 violations. Standalone targets (nav, crisis strip, footer) remain ≥44px, verified by the header/footer QA script in this same pass.
+4. **Live verification — PASS.** Netlify published deploy `6b076760cef6ae014bfcfed2` state `ready`; /about and /resources/tonight fetched live post-deploy (2026-11-25 22:56 UTC crawl): all five quotes + captions in place, the Tonight page complete, crisis lines intact, TALK keyword unchanged; live axe + live mobile runs above.
+5. **Sources of truth — PASS.** Verbatim discipline proven by diff: across `about.astro`, `resources.astro`, and `partners.astro` the generator changes are **pure insertions — zero lines of Carlos's copy removed or altered**, order preserved. Quotes come only from `scripts/about-quotes.json` (byte-asserted against the Drive book exports). Curated listings come only from the official sources cited above. The HOME→TALK standardization is untouched in either direction (ratification still pending with Carlos); the Spanish AYUDA keyword is Crisis Text Line's own routing keyword, stated as fact, not a change to the site's crisis copy.
+6. **Contrast-safe tokens — PASS.** No new colors. The one additive CSS rule (`.quote-source`) uses the existing `--muted` on `--bg` pairing already shipped in the footer; pull-quotes reuse the established `.pullquote` treatment (Newsreader italic, `--accent-strong-bg` rule).
+
+## New / changed microcopy (functional only — for Carlos's review)
+
+1. About: section heading "From the book, from the songs" + the five `.quote-source` captions listed in Part B (the quotes themselves are his exact words, not microcopy).
+2. Resources: "Pages from this space" block (heading + 3 one-line page descriptions); "More places that can help" (heading, intro line, 6 group headings, 17 listings as cited in Part A1).
+3. Partners: "Ways to Work With Us" block (heading, intro, 3 sub-headings, listings as in Part C) — including the fiscal-sponsorship mechanism sentence and the (209) 701-1137 contact line.
+4. The three new pages in full (Part A2 above).
+Nothing in Carlos's first-person voice was written; no existing line of his was reworded.
+
+## Paperwork
+
+Village Calendar entry added ("CC3PO Village — Background Work", 2026-11-25, show as free). Change Log line appended to Drive doc 1KUs-319hRYzk4H_RTbMolZkpxYxsozezOz_1L81yo60. Scoped files mirrored into the `~/workspace/sites/dlyw-phase1` working copy (generator, quotes JSON, the three generated pages, the three new resource pages, Layout.astro) so the parallel Chapel-forum build keeps these additions on its next build; the forum build's own files (chapel/index/podcast/start-here) were not touched.
