@@ -55,3 +55,10 @@ Carlos asked for a header/footer restructure with the CC3PO logo on the site (fu
 Chapel live build (safety-gated) · .com redirect + registrar transfer ·
 /es/ mirror · Journal/Anonymous Voices submission + display path ·
 per-entry journal pages · estate links repoint to /start-here.
+
+## Staging pass (2026-11-26)
+
+All six chapters of *Don't Lose Your Way, with Carlos Cabrales* are staged in locked slots on the Podcast page (full record in `qa/BUILD-REPORT.md`, "Staging Pass"). What a future builder needs to know:
+- The chapter list renders from **`src/data/chapters.mjs`** — never hand-edit the list in `podcast.astro`. Release dates live there AND in the show's RELEASE-PLAN.md; change both in the same motion or they drift.
+- Locked means: marker + title + "Staged — opens <date>" only. **No audio element, player, or audio URL until a chapter's release job opens it** — the BUILD-NOTES provenance warning about Ep. 1 audio still stands until the Dec 7, 2026 release mechanic runs.
+- Transistor: the account has NO DLYW show (only CC3PO Podcast 86085). Do not put DLYW episodes on 86085. Draft creation waits on the show existing.

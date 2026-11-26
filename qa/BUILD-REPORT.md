@@ -456,3 +456,31 @@ Nothing in Carlos's first-person voice was written; no existing line was reworde
 4. **Live verification — PASS.** Netlify deploy `6b086a5b899730fee157d298`; live axe + live QA runs above hit the themed page (all theme checks true on the live URL).
 5. **Sources of truth — PASS.** Verbatim discipline proven by the text diff (one structural label added, nothing else). Chapter names/status from CONCEPT-BRIEF-V2 / INTRO-RECORDING-KIT via the previous pass, unchanged.
 6. **Contrast-safe tokens — PASS.** No new colors: deepened ground is a darker shade of the site's own ground (every text pairing's contrast rises, none falls); lit accent is the established #ef6a87-on-dark pairing; future chapter markers use `--muted` (0.78 white) on the dark ground, axe-clean. The road line and node glows are decorative, under no text.
+
+---
+
+# Staging Pass — 2026-11-26
+
+Carlos directed ("Go ahead and stage the chapters for the weekly release plan") and then set the launch dates mid-pass: **Mondays from December 7, 2026, 06:00 PT** — Ch1 Dec 7 · Ch2 Dec 14 · Ch3 Dec 21 · Ch4 Dec 28 · Ch5 Jan 4, 2027 · Ch6 Jan 11, 2027 (all verified Mondays). Commit `5623b70c66001673db6cd4b89dca033ba2948e82` on `village-phase1`; Netlify deploy `6b08814599826d637be07f4d` (folder deploy of `dist/`, site `dontloseyourway-cc3po`, 2026-11-26 18:58 UTC).
+
+## What changed
+
+- **NEW `src/data/chapters.mjs`** — the chapters data file, single source the Podcast page renders from (the date table also lives in the show's RELEASE-PLAN.md; the two must never drift). Per chapter: number, numberWord, title, slug, status `staged`, releaseDate (the table above), audioUrl `null`, duration from the built mp3s (ffprobe-verified: 11:13 / 10:28 / 10:31 / 10:28 / 10:21 / 10:45), and a description drawn verbatim from the CONCEPT-BRIEF-V2 chapter map (held in the data for the release mechanics; not rendered while locked).
+- **`src/pages/podcast.astro`** — the Night Road chapter list now renders from the data file. Every marker reads **"Chapter N: Title — Staged — opens Mon, Dec 7"** (per-chapter date). Chapter One keeps the lit node; its old status "recorded and in production" is retired. **Honesty rule held: no player, no `<audio>` element, no download link, no audio URL anywhere (live DOM: 0 audio elements, 0 .mp3 references).** Everything else on the page is byte-identical — Start Here console + its re-recording status line, Take a Minute, Send a Voice Message, Chapel pointer, The music, and the full crisis spec (Layout untouched).
+
+## New microcopy (complete list, for Carlos's review)
+
+1. Per-chapter status: "Staged — opens Mon, Dec 7" (and its five siblings) — the only new words on the page, generated from the data file.
+
+## Gates
+
+1. **Functional — PASS (scoped).** Build clean (18 pages). Local + live DOM verification (`dlyw-podcast-staging-qa.mjs`): six mile markers, exactly one lit node, all six staged labels with correct dates, old status gone, console + 3 cards present, zero audio.
+2. **Axe — PASS.** `axe-gate.mjs`, WCAG 2.2 AA tag set: **0 violations** on /podcast/ local AND live (menu-open/form-error n/a — no menu toggle, no forms).
+3. **Mobile QA — PASS.** 390/375/360, local + live: horizontal overflow **0px**, exactly one h1. Screenshots: `qa/shots/podcast-staging-390-local.png`, `qa/shots/podcast-staging-390-live.png` (read: crisis strip intact at top, console unchanged, road with lit first marker and six dated staged slots, crisis block at full prominence).
+4. **Live verification — PASS.** Deploy `6b08814599826d637be07f4d` state current; live axe + live QA hit the staged page at https://dontloseyourway.cc3po.com/podcast/ (all checks true on the live URL).
+5. **Sources of truth — PASS.** Dates from Carlos's ruling (also in RELEASE-PLAN.md); durations ffprobe-measured from the built mp3s; descriptions verbatim from CONCEPT-BRIEF-V2; no surviving copy reworded (surgical edits only: one import line, the road list block).
+6. **Contrast-safe tokens — PASS.** No new colors or styles; the road list reuses the existing Night Road CSS unchanged (status text inherits the established pairings; axe-clean local + live).
+
+## Transistor — STOPPED at the show question (no drafts created)
+
+The Transistor account holds exactly **one** show: CC3PO Podcast (id 86085) — a different show. **No Don't Lose Your Way show exists**, so per the staging brief no drafts were created and no show was created. Creating the DLYW show is Carlos's input; once it exists, one draft per chapter (audio uploaded, crisis lines in descriptions, left unscheduled) is a short follow-up pass. The release-date table above is recorded here for that pass.
