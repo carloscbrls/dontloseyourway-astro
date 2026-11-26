@@ -376,3 +376,24 @@ Note for the record: the forum v1 build section does not appear in either local 
 - Nothing else changed: zero site files edited; all copy and the crisis spec (strip + Quill block, 988 + TALK) untouched — there was nothing on the site to change.
 
 **Paperwork:** this section; Village Calendar entry; Drive Change Log line (2026-11-25). The BUILD-REPORT push rides the token-connector route to `village-phase1` as usual.
+
+---
+
+# Podcast Name + Chapter Map Pass — 2026-11-26
+
+Carlos decided the show's name on 2026-11-26 — **"Don't Lose Your Way, with Carlos Cabrales"** (CONCEPT-BRIEF-V2 Open Decision 1, closed) — and the Podcast page was updated to match. One file changed: `src/pages/podcast.astro`. Netlify deploy `6b0867f2cfa6ffbbdb5fcb86` (folder deploy of `dist/`, published state `ready`, 2026-11-26 17:10 UTC). Source pushed to `village-phase1` in the same pass.
+
+## What changed (text diff, pre-pass build vs this build — these are the ONLY changes on the page)
+- Show heading: "The Don't Lose Your Way Podcast" → **"Don't Lose Your Way, with Carlos Cabrales"**; the line "A working title — the show's final name is still being chosen." is **removed entirely** (the now-unused `.working-title` CSS rule went with it). The format paragraph below it is byte-identical.
+- The section **"Season One: Before It Breaks"** (intro line + Episode 1–5 list: One More Minute / I Almost Did It / Anger Has a Voice / Nobody Saw Me Heal / Choose Yourself, E2–E5 "Planned") is **replaced** by **"The chapters"**: one factual line ("The show tells Carlos's story in chapters, in the order it happened. Each chapter will appear here as it is ready.") and the chapter map from CONCEPT-BRIEF-V2 / INTRO-RECORDING-KIT — Chapter One: The Letter (marked "recorded and in production"), The Quiet Spiral, The Bureaucratic Wall, The Breaking Point, The Aftermath, Breaking the Cycle. "Before It Breaks" was a retired name (verified collision); no audio is linked for any chapter — the Episode 1 pilot is private and gated on Carlos (re-listen + voice decision still open).
+
+## Untouched, verified byte-identical by the same diff
+Start Here / One More Minute listen block (real public audio, Carlos's copy), Take a Minute, Send a Voice Message, the Chapel pointer, The music / Healing Trauma series link, and the full crisis spec (persistent strip 988 + text TALK to 741741, pre-footer crisis block). No forms, endpoints, or new claims added.
+
+## Gates
+1. **Functional — PASS (scoped).** Build clean (18 pages); audio element on the live page still points at the real file (`dontloseyourway.com/audio/podcast/one-more-minute.mp3`).
+2. **Axe — PASS.** `axe-gate.mjs`, WCAG 2.2 AA tag set: **0 total violations** on /podcast/ on the local preview AND on the live URL (load state; menu-open/form-error n/a — no menu toggle, no forms).
+3. **Mobile QA — PASS.** Scripted Firefox (fleet recipe), 390/375/360, local + live: horizontal overflow **0px**, exactly one h1, crisis strip present. 390px full-page screenshot: `qa/shots/podcast-name-pass-390-live.png`.
+4. **Live verification — PASS.** Scripted live DOM checks on https://dontloseyourway.cc3po.com/podcast/: new name present; "working title" absent; "Before It Breaks" absent; all six chapter titles present; crisis strip present; One More Minute audio present. (A text-fetch crawl of the page returned a copy timestamped 3 minutes BEFORE this deploy — pre-deploy cache; the scripted live checks above are the verification of record.)
+5. **Sources of truth — PASS.** Name and chapter map taken verbatim from CONCEPT-BRIEF-V2 / INTRO-RECORDING-KIT; Carlos's existing copy untouched except where this pass replaces it.
+6. **Contrast-safe tokens — PASS.** No new colors or styles; the only CSS change is removal of the unused `.working-title` rule.
