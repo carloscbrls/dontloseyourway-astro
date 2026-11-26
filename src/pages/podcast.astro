@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Wayline from '../components/Wayline.astro';
+import { chapters, statusTextFor } from '../data/chapters.mjs';
 ---
 
 <Layout title="Podcast — Don't Lose Your Way" description="Documentary-style stories for those who carry weight no one sees. Sometimes it helps to hear a voice that knows.">
@@ -36,30 +37,12 @@ import Wayline from '../components/Wayline.astro';
         <p>The show tells Carlos's story in chapters, in the order it happened. Each chapter will appear here as it is ready.</p>
         <p class="road-label">The road ahead</p>
         <ol class="road">
-          <li class="mile mile--lit">
-            <span class="mile-node" aria-hidden="true"></span>
-            <span class="mile-text"><strong>Chapter One: The Letter</strong> — recorded and in production</span>
-          </li>
-          <li class="mile">
-            <span class="mile-node" aria-hidden="true"></span>
-            <span class="mile-text">The Quiet Spiral</span>
-          </li>
-          <li class="mile">
-            <span class="mile-node" aria-hidden="true"></span>
-            <span class="mile-text">The Bureaucratic Wall</span>
-          </li>
-          <li class="mile">
-            <span class="mile-node" aria-hidden="true"></span>
-            <span class="mile-text">The Breaking Point</span>
-          </li>
-          <li class="mile">
-            <span class="mile-node" aria-hidden="true"></span>
-            <span class="mile-text">The Aftermath</span>
-          </li>
-          <li class="mile">
-            <span class="mile-node" aria-hidden="true"></span>
-            <span class="mile-text">Breaking the Cycle</span>
-          </li>
+          {chapters.map((chapter, i) => (
+            <li class={i === 0 ? 'mile mile--lit' : 'mile'}>
+              <span class="mile-node" aria-hidden="true"></span>
+              <span class="mile-text"><strong>Chapter {chapter.numberWord}: {chapter.title}</strong> — {statusTextFor(chapter)}</span>
+            </li>
+          ))}
         </ol>
 
         <div class="card">
