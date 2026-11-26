@@ -1,7 +1,52 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Wayline from '../components/Wayline.astro';
-import { chapters, statusTextFor } from '../data/chapters.mjs';
+import { chapters, opensTextFor } from '../data/chapters.mjs';
+
+/**
+ * Chapter Zero — the prequel. NOT one of the six chapters (chapters.mjs
+ * stays their single source of truth); it is a one-off station, MM 0 on the
+ * Night Road Radio, staged locked exactly like the chapters until its
+ * debut. The audio file is deliberately NOT in this repo or in public/ —
+ * it waits, approved-file-in-hand, at
+ * ~/workspace/content/cc3po/dontloseyourway-podcast/chapter-zero/chapter-zero-v1.mp3
+ *
+ * ACTIVATION — Thu Dec 4, 2026 (one change, three moves):
+ *   1. Copy that mp3 to public/media/chapter-zero.mp3
+ *   2. Flip `live` below from false to true
+ *   3. Build, push, deploy (the standard route)
+ * The player markup and the ON AIR lamp wiring already exist below and
+ * render only when `live` is true. Until then the page ships with no
+ * audio element and no .mp3 URL anywhere — the locked discipline.
+ */
+const chapterZero = {
+  name: 'Before the Letter',
+  readoutTitle: 'Chapter Zero: Before the Letter',
+  opensText: 'Opens Thu, Dec 4',
+  live: false,
+  audioUrl: '/media/chapter-zero.mp3',
+};
+
+/** The radio's seven stations, in dial order: MM 0, then MM 1–6 rendered
+ *  from chapters.mjs. Everything the readout shows comes from here. */
+const stations = [
+  {
+    mm: 'MM 0',
+    presetName: chapterZero.name,
+    title: chapterZero.readoutTitle,
+    status: chapterZero.opensText,
+  },
+  ...chapters.map((chapter) => ({
+    mm: `MM ${chapter.number}`,
+    presetName: chapter.title,
+    title: `Chapter ${chapter.numberWord}: ${chapter.title}`,
+    status: opensTextFor(chapter),
+  })),
+];
+const dialTicks = stations.map((station, i) => ({
+  label: station.mm,
+  left: (i / (stations.length - 1)) * 100,
+}));
 ---
 
 <Layout title="Podcast — Don't Lose Your Way" description="Documentary-style stories for those who carry weight no one sees. Sometimes it helps to hear a voice that knows.">
@@ -35,15 +80,54 @@ import { chapters, statusTextFor } from '../data/chapters.mjs';
 
         <h2>The chapters</h2>
         <p>The show tells Carlos's story in chapters, in the order it happened. Each chapter will appear here as it is ready.</p>
-        <p class="road-label">The road ahead</p>
-        <ol class="road">
-          {chapters.map((chapter, i) => (
-            <li class={i === 0 ? 'mile mile--lit' : 'mile'}>
-              <span class="mile-node" aria-hidden="true"></span>
-              <span class="mile-text"><strong>Chapter {chapter.numberWord}: {chapter.title}</strong> — {statusTextFor(chapter)}</span>
-            </li>
-          ))}
-        </ol>
+
+        <div class="radio">
+          <div class="radio-top">
+            <span class="radio-plate">Night Road Radio</span>
+            <span class="onair" id="onair-lamp"><span class="onair-dot" aria-hidden="true"></span>On Air</span>
+          </div>
+
+          <div class="dial" aria-hidden="true">
+            <p class="road-label">The road ahead</p>
+            <div class="dial-scale">
+              <span class="dial-needle" id="dial-needle"></span>
+              {dialTicks.map((tick) => (
+                <span class="dial-tick" style={`left:${tick.left}%`}><i></i>{tick.label}</span>
+              ))}
+            </div>
+          </div>
+
+          <div class="readout" aria-live="polite">
+            <p class="readout-mm" id="readout-mm">{stations[0].mm}</p>
+            <p class="readout-title" id="readout-title">{stations[0].title}</p>
+            <p class="readout-status" id="readout-status">{stations[0].status}</p>
+          </div>
+
+          {chapterZero.live && (
+            <div class="radio-player">
+              <audio id="chapter-zero-audio" controls preload="metadata" src={chapterZero.audioUrl}>
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          )}
+
+          <div class="presets" role="group" aria-label="Mile marker stations">
+            {stations.map((station, i) => (
+              <button
+                type="button"
+                class={i === 0 ? 'preset is-selected' : 'preset'}
+                data-station={i}
+                aria-pressed={i === 0 ? 'true' : 'false'}
+                aria-label={`${station.mm} ${station.presetName} — ${station.title}, ${station.status.charAt(0).toLowerCase()}${station.status.slice(1)}`}
+              >
+                <span class="preset-mm">{station.mm}</span>
+                <span class="preset-name">{station.presetName}</span>
+              </button>
+            ))}
+          </div>
+
+          <div class="grille" aria-hidden="true"></div>
+        </div>
 
         <div class="card">
           <h2>Send a Voice Message</h2>
@@ -61,6 +145,40 @@ import { chapters, statusTextFor } from '../data/chapters.mjs';
       </div>
     </section>
   </div>
+
+  <script define:vars={{ stations }}>
+    // The Night Road Radio: preset buttons tune the dial. Selecting a
+    // station moves the needle and updates the readout (an aria-live
+    // region, so the change is announced). Locked stations carry no
+    // audio — the readout is all they honestly have until they open.
+    const needle = document.getElementById('dial-needle');
+    const mmEl = document.getElementById('readout-mm');
+    const titleEl = document.getElementById('readout-title');
+    const statusEl = document.getElementById('readout-status');
+    const buttons = [...document.querySelectorAll('.preset')];
+    function selectStation(i) {
+      const station = stations[i];
+      buttons.forEach((button, j) => {
+        button.classList.toggle('is-selected', j === i);
+        button.setAttribute('aria-pressed', j === i ? 'true' : 'false');
+      });
+      if (needle) needle.style.left = `${(i / (stations.length - 1)) * 100}%`;
+      if (mmEl) mmEl.textContent = station.mm;
+      if (titleEl) titleEl.textContent = station.title;
+      if (statusEl) statusEl.textContent = station.status;
+    }
+    buttons.forEach((button, i) => button.addEventListener('click', () => selectStation(i)));
+
+    // The ON AIR lamp lights only while real audio is actually playing
+    // (Chapter Zero's player exists only once its station goes live).
+    const audio = document.getElementById('chapter-zero-audio');
+    const lamp = document.getElementById('onair-lamp');
+    if (audio && lamp) {
+      audio.addEventListener('play', () => lamp.classList.add('is-live'));
+      audio.addEventListener('pause', () => lamp.classList.remove('is-live'));
+      audio.addEventListener('ended', () => lamp.classList.remove('is-live'));
+    }
+  </script>
 
   <style>
     .wayline { margin: 2.5rem auto 0.5rem; }
@@ -131,61 +249,229 @@ import { chapters, statusTextFor } from '../data/chapters.mjs';
     .card h2 { margin-top: 0; }
     .card p:last-child { margin-bottom: 0; }
 
-    /* The road — chapters as mile markers on a vertical wayline. The line
-       runs brightest at the lit first marker and fades past the last one
-       into darkness: the story isn't finished. */
+    /* ——— The Night Road Radio ———
+       The chapters as a night-drive car radio: a deep unit with a glowing
+       dial, the wayline laid horizontal as its scale, mile markers for
+       stations, a readout window, and preset buttons you actually press.
+       The ON AIR lamp is dark until real audio plays — nothing on this
+       unit pretends. Nightshift tokens only; the rose pairings follow the
+       established discipline (#cf2e4f deep end, #ef6a87 lit accent). */
+    .radio {
+      position: relative;
+      overflow: hidden;
+      margin-top: 2rem;
+      background: linear-gradient(180deg, #10101e 0%, #0a0a14 72%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.5rem 1.5rem 1.25rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 18px 40px rgba(0, 0, 0, 0.35);
+    }
+    .radio::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(207, 46, 79, 0.55) 30%, rgba(239, 106, 135, 0.85) 62%, transparent);
+    }
+    .radio-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .radio-plate {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .onair {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.4375rem 0.875rem;
+    }
+    .onair-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+    }
+    .onair.is-live { color: var(--accent-tint); border-color: rgba(239, 106, 135, 0.5); }
+    .onair.is-live .onair-dot {
+      background: var(--accent-tint);
+      box-shadow: 0 0 10px 3px rgba(239, 106, 135, 0.55);
+    }
+
+    /* The dial — the wayline laid flat. Ticks are the mile markers; the
+       needle is the light you travel with. Decorative: the presets below
+       carry the same information for every visitor. */
     .road-label {
       font-size: 0.8125rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--muted);
-      margin: 1.75rem 0 0;
+      margin: 0 0 0.25rem;
     }
-    .road {
+    .dial { margin-top: 1.375rem; }
+    .dial-scale {
       position: relative;
-      list-style: none;
-      margin: 0.5rem 0 0;
-      padding: 0.25rem 0 3rem 2.25rem;
-      font-size: 1.0625rem;
-      font-weight: 300;
+      height: 3.25rem;
+      margin: 0 1rem;
     }
-    .road::before {
+    .dial-scale::before {
       content: '';
       position: absolute;
-      left: 6px;
-      top: 12px;
-      bottom: 0;
-      width: 2px;
-      background: linear-gradient(180deg, rgba(239, 106, 135, 0.9), rgba(207, 46, 79, 0.45) 45%, rgba(207, 46, 79, 0.12) 80%, transparent);
+      left: 0;
+      right: 0;
+      top: 9px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(239, 106, 135, 0.9), rgba(207, 46, 79, 0.45) 55%, rgba(207, 46, 79, 0.15) 88%, rgba(207, 46, 79, 0.05));
     }
-    .mile {
-      position: relative;
-      padding: 0.5rem 0;
-      margin: 0;
-      line-height: 1.5;
-    }
-    .mile-node {
+    .dial-tick {
       position: absolute;
-      left: calc(-2.25rem + 7px);
-      top: 1.0625rem;
+      top: 0;
       transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.6875rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .dial-tick i {
+      width: 2px;
+      height: 10px;
+      background: rgba(239, 106, 135, 0.55);
+    }
+    .dial-needle {
+      position: absolute;
+      top: -5px;
+      left: 0;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 32px;
+      border-radius: 2px;
+      background: var(--accent-tint);
+      box-shadow: 0 0 10px 2px rgba(239, 106, 135, 0.6);
+      z-index: 1;
+    }
+
+    /* The readout — a lit window in the unit's face. What it says is all
+       a locked station honestly has: its name and the day it opens. */
+    .readout {
+      margin-top: 1rem;
+      background:
+        radial-gradient(24rem 8rem at 85% -30%, rgba(239, 106, 135, 0.09), transparent 60%),
+        linear-gradient(180deg, var(--surface-2), var(--surface));
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.125rem 1.25rem 1.25rem;
+      box-shadow: inset 0 0 24px rgba(207, 46, 79, 0.07);
+    }
+    .readout-mm {
+      margin: 0;
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .readout-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 5.5vw, 2rem);
+      line-height: 1.2;
+      color: var(--text);
+      margin: 0.3125rem 0 0.4375rem;
+    }
+    .readout-status {
+      display: flex;
+      align-items: baseline;
+      gap: 0.625rem;
+      margin: 0;
+      font-size: 0.9375rem;
+      color: var(--accent-tint);
+    }
+    .readout-status::before {
+      content: '';
+      flex: none;
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: var(--surface-2);
-      border: 2px solid rgba(239, 106, 135, 0.35);
-    }
-    .mile--lit .mile-node {
       background: var(--accent-tint);
-      border-color: var(--accent-tint);
-      box-shadow: 0 0 12px 3px rgba(239, 106, 135, 0.5);
+      box-shadow: 0 0 8px 2px rgba(239, 106, 135, 0.45);
+      transform: translateY(-1px);
     }
-    .mile:not(.mile--lit) .mile-text { color: var(--muted); }
 
-    /* The one allowed motion: Chapter One's node breathes, slowly — and
-       only for visitors who allow motion. */
+    /* Chapter Zero's player — rendered only when the station is live. */
+    .radio-player { margin-top: 1rem; }
+    .radio-player audio { width: 100%; }
+
+    /* The presets — real buttons, one per mile marker. */
+    .presets {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+    .preset {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.1875rem;
+      min-height: 3.75rem;
+      padding: 0.625rem 0.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .preset:hover { border-color: rgba(239, 106, 135, 0.45); }
+    .preset:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+    .preset-mm { font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.08em; }
+    .preset-name { font-size: 0.625rem; line-height: 1.3; color: var(--muted); text-align: center; }
+    .preset.is-selected {
+      background: linear-gradient(180deg, var(--surface-2), var(--surface));
+      border-color: rgba(239, 106, 135, 0.65);
+      box-shadow: inset 0 0 0 1px rgba(239, 106, 135, 0.25), 0 0 14px rgba(207, 46, 79, 0.25);
+    }
+    .preset.is-selected .preset-name { color: var(--text); }
+
+    /* The speaker grille — texture only, the bottom of the unit's face. */
+    .grille {
+      margin-top: 1.25rem;
+      height: 2.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 0 0 8px 8px;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1.6px);
+      background-size: 9px 9px;
+      background-position: center;
+    }
+
+    @media (max-width: 640px) {
+      .radio { padding: 1.25rem 1rem 1rem; }
+      .presets { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    /* Motion only for visitors who allow it: the needle glides between
+       stations, and a live ON AIR lamp breathes slowly. */
     @media (prefers-reduced-motion: no-preference) {
-      .mile--lit .mile-node { animation: node-pulse 5s ease-in-out infinite; }
+      .dial-needle { transition: left 0.6s ease; }
+      .onair.is-live .onair-dot { animation: node-pulse 5s ease-in-out infinite; }
       @keyframes node-pulse {
         0%, 100% { box-shadow: 0 0 8px 2px rgba(239, 106, 135, 0.35); }
         50% { box-shadow: 0 0 16px 5px rgba(239, 106, 135, 0.6); }

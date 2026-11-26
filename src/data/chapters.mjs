@@ -95,9 +95,17 @@ export const chapters = [
  *  2026-11-26; same table in RELEASE-PLAN.md). */
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-export function statusTextFor(chapter) {
-  if (!chapter.releaseDate) return 'Staged — opens on its release date';
+/** "Opens Mon, Dec 7" — the Night Road Radio readout's status line for a
+ *  staged chapter (the radio pass, 2026-11-26). Same date table, same
+ *  formatting as the status line below; the two must never drift. */
+export function opensTextFor(chapter) {
+  if (!chapter.releaseDate) return 'Opens on its release date';
   const [y, m, d] = chapter.releaseDate.split('-').map(Number);
   const dt = new Date(Date.UTC(y, m - 1, d));
-  return `Staged — opens ${WEEKDAYS[dt.getUTCDay()]}, ${MONTHS[m - 1]} ${d}`;
+  return `Opens ${WEEKDAYS[dt.getUTCDay()]}, ${MONTHS[m - 1]} ${d}`;
+}
+export function statusTextFor(chapter) {
+  if (!chapter.releaseDate) return 'Staged — opens on its release date';
+  const opens = opensTextFor(chapter);
+  return `Staged — ${opens.charAt(0).toLowerCase()}${opens.slice(1)}`;
 }
