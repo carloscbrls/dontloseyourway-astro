@@ -422,3 +422,37 @@ One look at the Bolt source repo tree (`carloscbrls/Dontloseyourway`): `public/a
 4. **Live verification — PASS.** Scripted live DOM checks on https://dontloseyourway.cc3po.com/podcast/: **zero `<audio>` elements** on the page; zero src/href references to `dontloseyourway.com/audio`; Start Here / One More Minute block intact with its copy; the re-recording line present; all six chapter titles present; crisis strip present.
 5. **Sources of truth — PASS.** Removal grounded in Carlos's own statement (2026-11-26) plus the verified 404; the one added line is functional microcopy in the page's existing voice, nothing invented beyond it.
 6. **Contrast-safe tokens — PASS.** No new colors or styles; the only CSS change is removal of the unused `audio` rule.
+
+---
+
+# Podcast Theme Pass — 2026-11-26
+
+Carlos pointed at the CC3PO Christmas Radio demo (an immersive themed player page) and directed: "create a style like this but for Don't Lose Your Way" — then clarified: **"Create its own theme."** Same immersive, designed-experience spirit, original to this show — not a radio copy. One file changed: `src/pages/podcast.astro` (page-local styles only; Layout.astro and every other page untouched). Netlify deploy `6b086a5b899730fee157d298` (folder deploy of `dist/`, site `dontloseyourway-cc3po`, 2026-11-26 17:20 UTC). Source pushed to `village-phase1` in the same pass.
+
+## The concept as built — "The Night Road"
+
+The show is a man telling his story in chapters, at night, one voice. The page becomes a quiet listening room on a night road, growing the site's existing wayline motif (thin path of light, rose gradient #cf2e4f → #ef6a87, one glowing node) into the page's own world:
+
+- **Deepened ground, page-scoped.** The page content sits on a deepened calm dark ground (a faint rose horizon glow at the top easing into a near-black that settles back to the site's `--bg`) — Nightshift tokens only, no new colors. The crisis strip and pre-footer crisis block live in the Layout, *outside* this ground, byte-identical and at full prominence.
+- **The chapters are mile markers on the road.** "The chapters" list is now a vertical wayline: a rose line running through six node markers. **Chapter One: The Letter** carries the lit, glowing node with its existing status text beside it ("recorded and in production"); the other five chapters (The Quiet Spiral, The Bureaucratic Wall, The Breaking Point, The Aftermath, Breaking the Cycle) rest dimmer ahead on the road in muted text. The line fades past the last marker into darkness — the story isn't finished. Chapter One's node breathes with a slow glow pulse (5s), only inside `@media (prefers-reduced-motion: no-preference)` — the pass's only motion.
+- **A console, not a fake player.** The Start Here / One More Minute block is now a designed listening console card (surface gradient, the wayline as its top edge). It presents the show's episode block — heading, tags, description, all verbatim — and the re-recording line as its **status readout**: a dashed rule, a small lit status dot, the line itself. **Honesty rule held: there is no audio yet, so the console has no play button, no progress bar, no waveform, no control of any kind.** Status, not controls — a decorative fake player is exactly the failure the previous pass fixed.
+- **One designed place.** Take a Minute, Send a Voice Message, and The music take the same themed card treatment (surface, border, radius), so the whole page reads as one room.
+
+## Copy integrity
+
+Full text diff of the built page against the pre-pass live build: **exactly one added line** — the structural label "The road ahead" above the chapter road (letterspaced small caps). Every word of Carlos's copy is byte-identical, including the console block, the chapter list and its status text, and the full crisis spec (persistent strip 988 + text TALK to 741741, pre-footer crisis block).
+
+## New microcopy (complete list, for Carlos's review)
+
+1. Podcast, road label: "The road ahead" — structural label for the chapter road; the only new words on the page.
+
+Nothing in Carlos's first-person voice was written; no existing line was reworded; no audio elements, forms, or endpoints added (live DOM check: zero `<audio>` elements).
+
+## Gates
+
+1. **Functional — PASS (scoped).** Build clean (18 pages). Live DOM verification: chapter road present with six mile markers and exactly one lit node (Chapter One, status text intact), console present, three themed cards present, crisis strip + crisis block present, zero audio elements.
+2. **Axe — PASS.** `axe-gate.mjs`, WCAG 2.2 AA tag set: **0 total violations** on /podcast/ on the local preview AND on the live URL (load state; menu-open/form-error n/a — no menu toggle, no forms).
+3. **Mobile QA — PASS.** Scripted Firefox (fleet recipe, `dlyw-podcast-theme-qa.mjs`), 390/375/360, local + live: horizontal overflow **0px**, exactly one h1. 390px full-page screenshots: `qa/shots/podcast-theme-390-local.png`, `qa/shots/podcast-theme-390-live.png` (read top-to-bottom: console, status readout, road with lit first marker fading into darkness, cards, crisis block at full prominence).
+4. **Live verification — PASS.** Netlify deploy `6b086a5b899730fee157d298`; live axe + live QA runs above hit the themed page (all theme checks true on the live URL).
+5. **Sources of truth — PASS.** Verbatim discipline proven by the text diff (one structural label added, nothing else). Chapter names/status from CONCEPT-BRIEF-V2 / INTRO-RECORDING-KIT via the previous pass, unchanged.
+6. **Contrast-safe tokens — PASS.** No new colors: deepened ground is a darker shade of the site's own ground (every text pairing's contrast rises, none falls); lit accent is the established #ef6a87-on-dark pairing; future chapter markers use `--muted` (0.78 white) on the dark ground, axe-clean. The road line and node glows are decorative, under no text.

@@ -4,53 +4,209 @@ import Wayline from '../components/Wayline.astro';
 ---
 
 <Layout title="Podcast — Don't Lose Your Way" description="Documentary-style stories for those who carry weight no one sees. Sometimes it helps to hear a voice that knows.">
-  <section class="section">
-    <div class="container prose">
-      <h1>Podcast</h1>
-      <p>Documentary-style stories for those who carry weight no one sees. Sometimes it helps to hear a voice that knows.</p>
+  <div class="night-road">
+    <section class="section">
+      <div class="container prose">
+        <h1>Podcast</h1>
+        <p>Documentary-style stories for those who carry weight no one sees. Sometimes it helps to hear a voice that knows.</p>
 
-      <h2>Don't Lose Your Way, with Carlos Cabrales</h2>
-      <p>This is where the podcast is going: one voice — Carlos, telling his own story. Each episode opens with the same introduction, walks through one chapter of what he went through, and closes with what he is building toward next. New episodes will appear here as they are ready.</p>
+        <h2>Don't Lose Your Way, with Carlos Cabrales</h2>
+        <p>This is where the podcast is going: one voice — Carlos, telling his own story. Each episode opens with the same introduction, walks through one chapter of what he went through, and closes with what he is building toward next. New episodes will appear here as they are ready.</p>
 
-      <Wayline />
+        <Wayline />
 
-      <h2>Start Here</h2>
+        <div class="console">
+          <h2>Start Here</h2>
 
-      <h3>One More Minute</h3>
-      <p>Survival Mental Health Silence</p>
-      <p>If you only listen to one episode first, begin here. This story is about the pause between pain and decision — and how one more minute can change everything.</p>
-      <p>This episode is being re-recorded for the new show — it will live here when it is ready.</p>
+          <h3>One More Minute</h3>
+          <p>Survival Mental Health Silence</p>
+          <p>If you only listen to one episode first, begin here. This story is about the pause between pain and decision — and how one more minute can change everything.</p>
+          <p class="status">This episode is being re-recorded for the new show — it will live here when it is ready.</p>
+        </div>
 
-      <h2>Take a Minute</h2>
-      <p>What are you feeling right now?</p>
-      <p>What is something you have survived that people may not see?</p>
-      <p>Who could you reach out to today, even if it is just one person?</p>
-      <p>You do not need to answer everything today. Start with one honest moment.</p>
+        <div class="card">
+          <h2>Take a Minute</h2>
+          <p>What are you feeling right now?</p>
+          <p>What is something you have survived that people may not see?</p>
+          <p>Who could you reach out to today, even if it is just one person?</p>
+          <p>You do not need to answer everything today. Start with one honest moment.</p>
+        </div>
 
-      <h2>The chapters</h2>
-      <p>The show tells Carlos's story in chapters, in the order it happened. Each chapter will appear here as it is ready.</p>
-      <ol>
-        <li><strong>Chapter One: The Letter</strong> — recorded and in production</li>
-        <li>The Quiet Spiral</li>
-        <li>The Bureaucratic Wall</li>
-        <li>The Breaking Point</li>
-        <li>The Aftermath</li>
-        <li>Breaking the Cycle</li>
-      </ol>
+        <h2>The chapters</h2>
+        <p>The show tells Carlos's story in chapters, in the order it happened. Each chapter will appear here as it is ready.</p>
+        <p class="road-label">The road ahead</p>
+        <ol class="road">
+          <li class="mile mile--lit">
+            <span class="mile-node" aria-hidden="true"></span>
+            <span class="mile-text"><strong>Chapter One: The Letter</strong> — recorded and in production</span>
+          </li>
+          <li class="mile">
+            <span class="mile-node" aria-hidden="true"></span>
+            <span class="mile-text">The Quiet Spiral</span>
+          </li>
+          <li class="mile">
+            <span class="mile-node" aria-hidden="true"></span>
+            <span class="mile-text">The Bureaucratic Wall</span>
+          </li>
+          <li class="mile">
+            <span class="mile-node" aria-hidden="true"></span>
+            <span class="mile-text">The Breaking Point</span>
+          </li>
+          <li class="mile">
+            <span class="mile-node" aria-hidden="true"></span>
+            <span class="mile-text">The Aftermath</span>
+          </li>
+          <li class="mile">
+            <span class="mile-node" aria-hidden="true"></span>
+            <span class="mile-text">Breaking the Cycle</span>
+          </li>
+        </ol>
 
-      <h2>Send a Voice Message</h2>
-      <p>Some future episodes may include anonymous voice messages from listeners who want to share a story, reflection, or moment they made it through.</p>
-      <p>Voice submissions can be reviewed before being featured. Anonymous options will be available.</p>
-      <p>If you are in immediate distress, call or text 988 (U.S.). This site is not a crisis service.</p>
-      <p><strong>Phone:</strong> 988</p>
-      <p>Written reflections are open now: <a href="/chapel">the Chapel</a> is a moderated, anonymous room where you can leave a few words tonight and read others who have stood where you stand.</p>
+        <div class="card">
+          <h2>Send a Voice Message</h2>
+          <p>Some future episodes may include anonymous voice messages from listeners who want to share a story, reflection, or moment they made it through.</p>
+          <p>Voice submissions can be reviewed before being featured. Anonymous options will be available.</p>
+          <p>If you are in immediate distress, call or text 988 (U.S.). This site is not a crisis service.</p>
+          <p><strong>Phone:</strong> 988</p>
+          <p>Written reflections are open now: <a href="/chapel">the Chapel</a> is a moderated, anonymous room where you can leave a few words tonight and read others who have stood where you stand.</p>
+        </div>
 
-      <h2>The music</h2>
-      <p>The <em>Healing Trauma Through AI Music</em> series grew out of this same place. <a href="https://soundcloud.com/carlos-cabrales-iii/sets/healing-trauma-through-ai" target="_blank" rel="noopener noreferrer">Listen on SoundCloud →</a></p>
-    </div>
-  </section>
+        <div class="card">
+          <h2>The music</h2>
+          <p>The <em>Healing Trauma Through AI Music</em> series grew out of this same place. <a href="https://soundcloud.com/carlos-cabrales-iii/sets/healing-trauma-through-ai" target="_blank" rel="noopener noreferrer">Listen on SoundCloud →</a></p>
+        </div>
+      </div>
+    </section>
+  </div>
 
   <style>
     .wayline { margin: 2.5rem auto 0.5rem; }
+
+    /* ——— The Night Road — this page's own theme ———
+       A quiet listening room on a night road: a deepened ground, the wayline
+       grown into a road, the chapters as its mile markers. Page-scoped only;
+       the crisis strip and crisis block live in the Layout, outside this
+       ground, and are untouched. Tokens are the site's Nightshift set; the
+       rose pairings follow the established discipline (#cf2e4f carries the
+       gradient's deep end, #ef6a87 is the lit accent on dark). */
+    .night-road {
+      background:
+        radial-gradient(90rem 32rem at 50% -8rem, rgba(239, 106, 135, 0.06), transparent 60%),
+        linear-gradient(180deg, #07070d 0%, var(--bg) 88%);
+    }
+
+    /* The listening console — a status instrument, not a player. There is no
+       audio yet, so it carries no controls: the show's first episode block
+       and its status readout, nothing that pretends to play. */
+    .console {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, var(--surface-2), var(--surface));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.75rem 1.75rem 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .console::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(207, 46, 79, 0.55) 30%, rgba(239, 106, 135, 0.85) 62%, transparent);
+    }
+    .console h2 { margin-top: 0; }
+    .console .status {
+      display: flex;
+      align-items: baseline;
+      gap: 0.625rem;
+      border-top: 1px dashed rgba(255, 255, 255, 0.16);
+      padding-top: 1rem;
+      margin: 1.25rem 0 0;
+      font-size: 0.9375rem;
+    }
+    .console .status::before {
+      content: '';
+      flex: none;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-tint);
+      box-shadow: 0 0 8px 2px rgba(239, 106, 135, 0.45);
+      transform: translateY(-1px);
+    }
+
+    /* Themed cards — the rest of the page reads as one designed place. */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem 1.75rem;
+      margin-top: 2.5rem;
+    }
+    .card h2 { margin-top: 0; }
+    .card p:last-child { margin-bottom: 0; }
+
+    /* The road — chapters as mile markers on a vertical wayline. The line
+       runs brightest at the lit first marker and fades past the last one
+       into darkness: the story isn't finished. */
+    .road-label {
+      font-size: 0.8125rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 1.75rem 0 0;
+    }
+    .road {
+      position: relative;
+      list-style: none;
+      margin: 0.5rem 0 0;
+      padding: 0.25rem 0 3rem 2.25rem;
+      font-size: 1.0625rem;
+      font-weight: 300;
+    }
+    .road::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 12px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(239, 106, 135, 0.9), rgba(207, 46, 79, 0.45) 45%, rgba(207, 46, 79, 0.12) 80%, transparent);
+    }
+    .mile {
+      position: relative;
+      padding: 0.5rem 0;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .mile-node {
+      position: absolute;
+      left: calc(-2.25rem + 7px);
+      top: 1.0625rem;
+      transform: translateX(-50%);
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      border: 2px solid rgba(239, 106, 135, 0.35);
+    }
+    .mile--lit .mile-node {
+      background: var(--accent-tint);
+      border-color: var(--accent-tint);
+      box-shadow: 0 0 12px 3px rgba(239, 106, 135, 0.5);
+    }
+    .mile:not(.mile--lit) .mile-text { color: var(--muted); }
+
+    /* The one allowed motion: Chapter One's node breathes, slowly — and
+       only for visitors who allow motion. */
+    @media (prefers-reduced-motion: no-preference) {
+      .mile--lit .mile-node { animation: node-pulse 5s ease-in-out infinite; }
+      @keyframes node-pulse {
+        0%, 100% { box-shadow: 0 0 8px 2px rgba(239, 106, 135, 0.35); }
+        50% { box-shadow: 0 0 16px 5px rgba(239, 106, 135, 0.6); }
+      }
+    }
   </style>
 </Layout>
