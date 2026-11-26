@@ -24,9 +24,13 @@ folder-deployed from `dist/`; DNS: Cloudflare CNAME `dontloseyourway` →
   no narration endpoint, no ai-proxy, no fabricated episode runtimes (E2–E5
   are listed as Planned with no durations), no dead voice-submission buttons,
   no data-storing forms anywhere in Phase 1.
-- Podcast Ep. 1 audio is linked from the current .com deployment
-  (`dontloseyourway.com/audio/podcast/one-more-minute.mp3`) until Phase 2
-  moves the media assets.
+- Podcast Ep. 1 audio: there is none, and there never was — Carlos confirmed
+  2026-11-26 he never uploaded episode audio to the old site; the "One More
+  Minute" player was a placeholder pointing at a file that never existed
+  (404 on the old domain). The dead player was removed 2026-11-26 (see
+  BUILD-REPORT "Dead Player Removal Pass"); the block now carries a factual
+  re-recording line. Do not re-add an audio element until a real episode
+  file exists and is self-hosted.
 - The Talkspace link on Resources points to talkspace.com; the original
   Impact affiliate URL lives only in the Bolt source and should be restored
   from there in a later pass.

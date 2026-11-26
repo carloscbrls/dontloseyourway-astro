@@ -397,3 +397,28 @@ Start Here / One More Minute listen block (real public audio, Carlos's copy), Ta
 4. **Live verification — PASS.** Scripted live DOM checks on https://dontloseyourway.cc3po.com/podcast/: new name present; "working title" absent; "Before It Breaks" absent; all six chapter titles present; crisis strip present; One More Minute audio present. (A text-fetch crawl of the page returned a copy timestamped 3 minutes BEFORE this deploy — pre-deploy cache; the scripted live checks above are the verification of record.)
 5. **Sources of truth — PASS.** Name and chapter map taken verbatim from CONCEPT-BRIEF-V2 / INTRO-RECORDING-KIT; Carlos's existing copy untouched except where this pass replaces it.
 6. **Contrast-safe tokens — PASS.** No new colors or styles; the only CSS change is removal of the unused `.working-title` rule.
+
+---
+
+# Dead Player Removal Pass — 2026-11-26
+
+Carlos flagged it himself: "there's no audio so we might have to reinvent the audio for podcast" — and then confirmed he never added any audio to the old site ("There's nothing really in there cause I never added audio"). The Podcast page's only audio element pointed at `https://dontloseyourway.com/audio/podcast/one-more-minute.mp3`, which returns **404 Not Found** (Netlify) — a placeholder for a file that never existed. One file changed: `src/pages/podcast.astro` (plus a provenance correction in BUILD-NOTES.md). Netlify deploy `6b086927273bf16a809f6844` (folder deploy of `dist/`, site state `current`, 2026-11-26 17:15 UTC). Source pushed to `village-phase1` in the same pass.
+
+## Recovery due diligence (brief, per Carlos's word)
+
+One look at the Bolt source repo tree (`carloscbrls/Dontloseyourway`): `public/audio/podcast/` holds `episode-1.mp3` (3.77 MB), `s2e1-grant-deadline-tuesday.mp3` (4.06 MB), and `one-more-minute.mp3` at **744,610 bytes — exactly the size of `podcast-intro.mp3`** (different blob sha), i.e. an intro-length clip, not an episode. Combined with Carlos's direct statement that he never added episode audio, the removal branch was taken; no file was self-hosted and nothing was published in the player's place. The Episode 1 pilot of the new show stays private and gated on Carlos, untouched by this pass.
+
+## What changed (text diff, pre-pass build vs this build — the ONLY changes on the page)
+
+- The dead `<audio>` element (and its "Download the episode" fallback link) in the Start Here / One More Minute block is **removed**, along with its now-unused `audio { … }` CSS rule (same precedent as the `.working-title` removal in the previous pass).
+- In its place, exactly one factual line: "This episode is being re-recorded for the new show — it will live here when it is ready."
+- Everything else byte-identical: the Start Here heading, "One More Minute" heading, tags line ("Survival Mental Health Silence"), and the description ("If you only listen to one episode first, begin here…") are untouched, as are the show heading and format paragraph, Take a Minute, the six-chapter map from the previous pass, Send a Voice Message, the Chapel pointer, The music / Healing Trauma link, and the full crisis spec (persistent strip 988 + text TALK to 741741, pre-footer crisis block).
+
+## Gates
+
+1. **Functional — PASS (scoped).** Build clean (18 pages). The built `/podcast/` HTML contains zero references to `dontloseyourway.com/audio`.
+2. **Axe — PASS.** `axe-gate.mjs`, WCAG 2.2 AA tag set: **0 violations** on /podcast/ on the local preview AND on the live URL (load state; menu-open/form-error n/a — no menu toggle, no forms).
+3. **Mobile QA — PASS.** Scripted Firefox (fleet recipe), 390/375/360, local + live (`dlyw-podcast-audiofix-qa.mjs`): horizontal overflow **0px**, exactly one h1. 390px screenshots: `qa/shots/podcast-audiofix-390-local.png`, `qa/shots/podcast-audiofix-390-live.png`.
+4. **Live verification — PASS.** Scripted live DOM checks on https://dontloseyourway.cc3po.com/podcast/: **zero `<audio>` elements** on the page; zero src/href references to `dontloseyourway.com/audio`; Start Here / One More Minute block intact with its copy; the re-recording line present; all six chapter titles present; crisis strip present.
+5. **Sources of truth — PASS.** Removal grounded in Carlos's own statement (2026-11-26) plus the verified 404; the one added line is functional microcopy in the page's existing voice, nothing invented beyond it.
+6. **Contrast-safe tokens — PASS.** No new colors or styles; the only CSS change is removal of the unused `audio` rule.
