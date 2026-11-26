@@ -484,3 +484,48 @@ Carlos directed ("Go ahead and stage the chapters for the weekly release plan") 
 ## Transistor — STOPPED at the show question (no drafts created)
 
 The Transistor account holds exactly **one** show: CC3PO Podcast (id 86085) — a different show. **No Don't Lose Your Way show exists**, so per the staging brief no drafts were created and no show was created. Creating the DLYW show is Carlos's input; once it exists, one draft per chapter (audio uploaded, crisis lines in descriptions, left unscheduled) is a short follow-up pass. The release-date table above is recorded here for that pass.
+
+
+---
+
+# Radio Pass — 2026-11-26 (13:15 PT ask: "embed everything into a radio feel… for this site specifically"; 13:16 PT timing ruling)
+
+Carlos directed rebuilding the Podcast page as a radio — the Christmas Radio demo's presentation feel (a designed unit you operate: dial, ON AIR sign, station readout) translated into this site's own Night Road identity, NOT the Christmas cream/gold 1950s styling. Timing ruled in the same breath: the page builds now so the visual result can be judged, but **Chapter Zero's public debut waits until Thu Dec 4, 2026** (site + social run together) — so MM 0 ships locked, exactly like the chapters. Commit `700239479502b4f12c2342e655ba1aa01af7c7a6` on `village-phase1`; Netlify deploy `6b08a339a1412f202565a8d3` (folder deploy of `dist/`, site `dontloseyourway-cc3po`, published deploy confirmed in the site record).
+
+## What changed (one page: `src/pages/podcast.astro`; one helper: `src/data/chapters.mjs`)
+
+- **The vertical mile-marker list is now the Night Road Radio** — a night-drive car-radio unit in the "The chapters" section, rendered from the same data (no fork): `chapters.mjs` gained an exported `opensTextFor()` ("Opens Mon, Dec 7"), and the existing `statusTextFor()` was refactored onto it so the two formats can never drift.
+- **The unit's face, top to bottom:** a maker's plate ("Night Road Radio") and an **ON AIR lamp** (dark — see honesty note); the **dial** — the wayline laid horizontal as the scale, its existing caption "The road ahead" carried over from the list it replaces, seven tick marks labeled MM 0–MM 6, and a glowing rose **needle**; a **readout window** (Newsreader serif) showing the tuned station; **seven preset buttons**, one per mile marker, each with its MM number and the station's name; a speaker-grille texture closing the face.
+- **How it operates:** the radio opens tuned to **MM 0**. Pressing a preset (click, tap, or keyboard — they are real `<button>`s with `aria-pressed`) moves the needle along the dial (0.6s glide, only under `prefers-reduced-motion: no-preference`), marks that preset selected, and updates the readout: station name + its opening day. The readout is an `aria-live="polite"` region, so the change is announced. MM 3 reads "Chapter Three: The Bureaucratic Wall — Opens Mon, Dec 21"; MM 4 was screenshot-verified mid-dial.
+- **Everything else on the page is untouched:** Start Here console + its re-recording status line, Take a Minute, Send a Voice Message (+ Chapel pointer), The music, and the full crisis spec (Layout untouched — strip + pre-footer block outside the themed ground, byte-identical, full prominence). All surviving copy verbatim; the only copy retired is the list markup the radio replaces (its "The road ahead" label survives as the dial's caption).
+
+## MM 0 — locked, and the Dec 4 activation (ONE precise change)
+
+MM 0 is staged exactly like chapters 1–6: present on the dial, selectable, readout **"Chapter Zero: Before the Letter — Opens Thu, Dec 4"** — and **no audio element, no .mp3 reference, no reachable audio URL anywhere in the shipped page** (proven in the built HTML and in live DOM checks at four widths: `audio` count 0, `.mp3` count 0). The approved audio file was NOT copied into `public/` or the repo; it waits at `~/workspace/content/cc3po/dontloseyourway-podcast/chapter-zero/chapter-zero-v1.mp3`.
+
+**Activation — Thu Dec 4, 2026 (one change, three moves, in `src/pages/podcast.astro`'s frontmatter):**
+1. Copy `~/workspace/content/cc3po/dontloseyourway-podcast/chapter-zero/chapter-zero-v1.mp3` → `public/media/chapter-zero.mp3`
+2. In the `chapterZero` constant, flip **`live: false` → `live: true`** (the constant's own comment carries these same steps)
+3. Build, push, deploy (the standard route)
+
+The player markup (a native `<audio controls>` under the readout) and the ON AIR lamp wiring already exist in the page and render only when `live` is true — nothing else needs editing. When a visitor presses play, the lamp lights (and breathes, motion permitting); pause/end turns it dark. The lamp can therefore never claim the show is on air when it isn't — pre-activation it has no audio to light for, which is why it ships dark.
+
+## New microcopy (complete list, for Carlos's review)
+
+1. Unit plate: "Night Road Radio"
+2. Lamp label: "On Air"
+3. Dial tick labels + preset numbers: "MM 0" … "MM 6"
+4. Preset names: "Before the Letter" (MM 0) + the six chapter titles verbatim from `chapters.mjs`
+5. Readout station titles: "Chapter Zero: Before the Letter" + "Chapter One: The Letter" … "Chapter Six: Breaking the Cycle" (number words + titles from `chapters.mjs`)
+6. Readout status lines: "Opens Thu, Dec 4" (MM 0) + "Opens Mon, Dec 7" … "Opens Mon, Jan 11" (the `opensTextFor()` format — the staged list's "Staged — opens …" wording without the prefix, since the dial itself is the staging frame)
+7. Carried over, not new: "The road ahead" (was the list's label; now the dial's caption)
+Nothing in Carlos's first-person voice was written; no existing line of his was reworded.
+
+## Gates
+
+1. **Functional — PASS.** Build clean (18 pages). Scripted Firefox QA (`dlyw-podcast-radio-qa.mjs`) local AND live, at 390/375/360/1280: 7 presets, exactly one selected; default readout = MM 0 / "Chapter Zero: Before the Letter" / "Opens Thu, Dec 4"; click MM 3 → readout + needle (50%) + `aria-pressed` all update; keyboard (focus + Enter on MM 5) selects Chapter Five; ON AIR lamp never live (no audio exists); console + 3 cards present; old road list gone; **zero `<audio>` elements and zero `.mp3` references at every width, local and live**.
+2. **Axe — PASS.** `axe-gate.mjs`, WCAG 2.2 AA tag set: **0 violations on /podcast/ local AND live** (load state; menu-open/form-error n/a — no menu toggle, no forms). One fix during the pass: the presets' accessible names now begin with their visible text (`label-content-name-mismatch`, 7 nodes → 0).
+3. **Mobile QA — PASS.** 390/375/360 local + live: horizontal overflow **0px** everywhere, exactly one h1. Screenshots: `qa/shots/podcast-radio-before-390.png` / `-before-1280.png` (pre-pass), `podcast-radio-390-local.png` / `-1280-local.png`, `podcast-radio-390-live.png` / `-1280-live.png` (full page), plus unit close-ups `podcast-radio-unit-local-390.png`, `podcast-radio-unit-local-1280.png`, `podcast-radio-unit-local-1280-mm4.png` (needle mid-dial), `podcast-radio-unit-live-1280.png` — all read: plate + dark lamp, dial with glowing needle, serif readout with lit status dot, rose-selected preset, grille; presets wrap 4+3 on mobile with no overflow.
+4. **Live verification — PASS.** Netlify published deploy `6b08a339a1412f202565a8d3` confirmed in the site record; live QA + live axe above ran against https://dontloseyourway.cc3po.com/podcast/ post-deploy; the live unit screenshot matches the local build pixel-for-pixel (identical file hash).
+5. **Sources of truth — PASS.** Stations MM 1–6 render from `src/data/chapters.mjs` (dates + titles; the file's RELEASE-PLAN date table unchanged); MM 0 is a page-level constant, documented as a one-off prequel station, not a chapter; durations/descriptions remain unrendered while locked, per the staging rule.
+6. **Contrast-safe tokens — PASS.** Nightshift tokens only; the unit's two literal deep-ground shades (#10101e / #0a0a14) extend the Night Road ground gradient the page already shipped (#07070d → `--bg`); #cf2e4f carries gradient deep ends and borders, #ef6a87 is the lit accent (needle, status, selected preset) on dark — the established pairings; axe-clean local + live.

@@ -62,3 +62,11 @@ All six chapters of *Don't Lose Your Way, with Carlos Cabrales* are staged in lo
 - The chapter list renders from **`src/data/chapters.mjs`** — never hand-edit the list in `podcast.astro`. Release dates live there AND in the show's RELEASE-PLAN.md; change both in the same motion or they drift.
 - Locked means: marker + title + "Staged — opens <date>" only. **No audio element, player, or audio URL until a chapter's release job opens it** — the BUILD-NOTES provenance warning about Ep. 1 audio still stands until the Dec 7, 2026 release mechanic runs.
 - Transistor: the account has NO DLYW show (only CC3PO Podcast 86085). Do not put DLYW episodes on 86085. Draft creation waits on the show existing.
+
+## Radio pass (2026-11-26)
+
+The Podcast page's chapter list is now the **Night Road Radio** (full record in `qa/BUILD-REPORT.md`, "Radio Pass"). What a future builder needs to know:
+- The radio renders its stations from `src/data/chapters.mjs` — MM 1–6 are the chapters (the file now also exports `opensTextFor()`, "Opens Mon, Dec 7"; `statusTextFor()` is built on it). **MM 0 (Chapter Zero) is a page-level constant in `podcast.astro`, NOT a chapter** — do not add it to chapters.mjs.
+- **MM 0 ships locked**: no `<audio>`, no .mp3 URL, nothing in `public/media/` for it. Its audio waits OUTSIDE the repo at `~/workspace/content/cc3po/dontloseyourway-podcast/chapter-zero/chapter-zero-v1.mp3`. **Activation on Thu Dec 4, 2026 = copy that file to `public/media/chapter-zero.mp3` + flip `chapterZero.live` to `true` in podcast.astro + build/push/deploy.** The player markup and ON AIR lamp wiring already exist and render only when live.
+- The ON AIR lamp lights only from real audio `play` events — never hard-code it lit.
+- The staging note above about Ep. 1 audio still stands; the Dec 7 release mechanic (dlyw-release-ch1) opens Chapter One the same way this pattern opens Chapter Zero.
